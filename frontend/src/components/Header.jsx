@@ -5,7 +5,7 @@ import { removeToken } from '../utils/token';
 import signout_black from '../images/logout_black.png';
 import signout_white from '../images/logout_white.png';
 
-function Header() {
+function Header(props) {
 
     const { isLoggedIn, setIsLoggedIn, userData } = useContext(CurrentUserContext);
     const navigate = useNavigate();
@@ -68,7 +68,7 @@ function Header() {
             return (
                 <>
                 <button className='nav__inicio nav__marcador' >Início</button>
-                <button className="nav__signin" onClick={() => navigate('/')}>Entrar</button>
+                <button className="nav__signin" onClick={props.onEditProfileClick}>Entrar</button>
                 </>
             );
         }

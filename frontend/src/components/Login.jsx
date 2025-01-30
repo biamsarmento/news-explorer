@@ -1,82 +1,66 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
-import Header from "./Header";
+import { useState, useContext, useEffect } from 'react'; 
+import CurrentUserContext from '../contexts/CurrentUserContext'; 
 
+export default function Login(props) {
+  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const [name, setName] = useState(''); 
+  const [description, setDescription] = useState(''); 
 
-function Login(props) {
+  useEffect(() => {
+    if (currentUser) {
+      setName(currentUser.name); 
+      setDescription(currentUser.about); 
+    }
+  }, [currentUser]); 
 
-    // const [data, setData] = useState({
-    //     email: "",
-    //     password: "",
-    // });
+  const handleNameChange = (event) => {
+    setName(event.target.value); 
+  };
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-    // };
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value); 
+  };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     handleLogin(data);
-    // };
+  async function handleSubmit(event) {
+    event.preventDefault(); 
 
-    // function renderLoginPopup() {
-    //     if (isLoginPopupOpen) {
-    //         return (
-    //             <InfoTooltip isLoginPopupOpen={isLoginPopupOpen} onClose={onClose} errorRegistration={errorRegistration}></InfoTooltip>
-    //         )
-    //     }
-    // }
+    await handleUpdateUser({ name, about: description }); 
+    props.onClose();
+  };
 
-    return (
-        <>
-        <section className="login" id="login">
-            <p>Login</p>
-            {/* <h1 className="login__title">Entrar</h1>
-            <div className="login__form">
-                <form className="login__form form" name="login__form" id="login__form" onSubmit={handleSubmit}>
-                <fieldset className="form__fieldset">
-                    <input 
-                    type="email" 
-                    className="form__input form__input_type_email" 
-                    id="email" 
-                    name="email"
-                    minLength="2" 
-                    maxLength="40" 
-                    placeholder="E-mail"
-                    value={data.email} 
-                    onChange={handleChange} 
-                    required />
-                    <span className="form__input-error nome-error"></span>
-                    <input 
-                    type="password" 
-                    className="form__input form__input_type_password" 
-                    id="password" 
-                    name="password" 
-                    minLength="2" 
-                    maxLength="200"
-                    placeholder="Senha"
-                    value={data.password} 
-                    onChange={handleChange} 
-                    required />
-                    <span className="form__input-error atividade-error"></span>
-                    <button type="submit" className="form__submit-button__login">Entrar</button>
-                </fieldset>
-                </form>
-            </div>
-            <div className="login__register-button">
-                <Link to="/signup" className="login__register-button_link">
-                    Ainda não é membro? Inscreva-se aqui!
-                </Link>
-            </div>
-            {isLoginPopupOpen && renderLoginPopup()} */}
-        </section>
-        </>
-    )
+  return (
+    <form 
+    className="profile-popup__form form" 
+    name="formPopup"
+    id="profile-popup__form" 
+    onSubmit={handleSubmit}
+    >
+        <fieldset
+        className="form__fieldset">
+            <input 
+            type="text" 
+            className="form__input form__input_type_name" 
+            id= "nome" 
+            name="name"
+            minLength="2" 
+            maxLength="40" 
+            value={name} 
+            onChange={handleNameChange} 
+            required />
+            <span className="form__input-error nome-error"></span>
+            <input 
+            type="text" 
+            className="form__input form__input_type_activity" 
+            id="atividade" 
+            name="about" 
+            minLength="2" 
+            maxLength="200"
+            value={description} 
+            onChange={handleDescriptionChange} 
+            required />
+            <span className="form__input-error atividade-error"></span>
+            <button type="submit" className="form__submit-button">Salvar</button>
+        </fieldset>
+    </form>
+  );
 }
-
-export default Login;

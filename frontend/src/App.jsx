@@ -224,9 +224,9 @@ function App() {
           />
           <Route
             path="/signin"
-            element={
-              <Login handleLogin={handleLogin} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration} ></Login>
-            }
+            // element={
+            //   <Login handleLogin={handleLogin} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration} ></Login>
+            // }
           />
           <Route
             path="/signup"

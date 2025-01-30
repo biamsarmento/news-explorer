@@ -37,29 +37,33 @@ export default function EditProfile(props) {
     >
         <fieldset
         className="form__fieldset">
+            <label className='form__input-label' for='email'>E-mail</label>
             <input 
-            type="text" 
-            className="form__input form__input_type_name" 
-            id="nome" 
-            name="name"
+            type="email" 
+            placeholder='Insira e-mail'
+            className="form__input form__input_type_email" 
+            id="email" 
+            name="email"
             minLength="2" 
             maxLength="40" 
             value={name} 
             onChange={handleNameChange} 
             required />
             <span className="form__input-error nome-error"></span>
+            <label className='form__input-label'>Senha</label>
             <input 
-            type="text" 
-            className="form__input form__input_type_activity" 
-            id="atividade" 
-            name="about" 
+            type="password" 
+            placeholder='Insira a senha'
+            className="form__input form__input_type_password" 
+            id="password" 
+            name="password" 
             minLength="2" 
-            maxLength="200"
+            maxLength="18"
             value={description} 
             onChange={handleDescriptionChange} 
             required />
             <span className="form__input-error atividade-error"></span>
-            <button type="submit" className="form__submit-button">Salvar</button>
+            <button type="submit" className="form__submit-button">Entrar</button>
         </fieldset>
     </form>
   );

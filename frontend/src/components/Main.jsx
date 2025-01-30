@@ -18,9 +18,12 @@ function Main(props) {
     return ( 
         <>
         <main className="content">
-            <Header></Header>
-            <PopupWithForm title="Entrar" name="login-popup" isLoginOpen={props.isLoginPopupOpen} onClose={props.onClose}>
+            <Header onEditProfileClick={props.onEditProfileClick} onloginClick={props.onLoginClick}></Header>
+            <PopupWithForm title="Entrar" name="login-popup" isOpen={props.isLoginPopupOpen} onClose={props.onClose}>
                 <Login onClose={props.onClose}></Login>
+            </PopupWithForm> 
+            <PopupWithForm title="Entrar" name="profile-popup" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
+                <EditProfile onClose={props.onClose}></EditProfile>
             </PopupWithForm> 
             {/* <PopupWithForm title="Editar Perfil" name="profile-popup" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
                 <EditProfile onClose={props.onClose}></EditProfile>
