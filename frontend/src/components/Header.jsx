@@ -1,12 +1,13 @@
-import logo from '../images/Vector.svg';
 import { useNavigate, useLocation } from "react-router-dom";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import { useContext } from 'react';
 import { removeToken } from '../utils/token';
+import signout_black from '../images/logout_black.png';
+import signout_white from '../images/logout_white.png';
 
 function Header() {
 
-    const { setIsLoggedIn, userData } = useContext(CurrentUserContext);
+    const { isLoggedIn, setIsLoggedIn, userData } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -16,39 +17,70 @@ function Header() {
         setIsLoggedIn(false);
     } 
 
-    const renderNav = () => {        
+    const renderLogo = () => {
         if (location.pathname === '/my-articles') {
             return (
                 <>
-                <button className='nav__inicio'>Início</button>
-                <button className='nav__my-articles nav__marcador'>Artigos Salvos</button>
+                <button className='header__logo nav__black'>News Explorer</button>
                 </>
             );
         } else {
             return (
                 <>
-                <button className='nav__inicio nav__marcador'>Início</button>
+                <button className='header__logo'>News Explorer</button>
                 </>
             );
         } 
+    };
+
+    const renderNav = () => {        
+        if (location.pathname === '/my-articles') {
+            return (
+                <>
+                <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Início</button>
+                <button className='nav__my-articles nav__marcador_black nav__black'>Artigos Salvos</button>
+                <button className="nav__signout_black">
+                    <p className='nav__user_black'>Elise</p>
+                    <img
+                        src={signout_black}
+                        alt="signout sign"
+                        className="nav__signout-sign"
+                    /> 
+                </button>
+                </>
+            );
+        } else if(isLoggedIn) {
+            return (
+                <>
+                <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Início</button>
+                <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Artigos Salvos</button>
+                <button className="nav__signout">
+                    <p className='nav__user'>Elise</p>
+                    <img
+                        src={signout_white}
+                        alt="signout sign"
+                        className="nav__signout-sign"
+                    /> 
+                </button>
+                </>
+            );
+        } else {
+            return (
+                <>
+                <button className='nav__inicio nav__marcador' >Início</button>
+                <button className="nav__signin" onClick={() => navigate('/')}>Entrar</button>
+                </>
+            );
+        }
     };
 
 
     return (
         <header className="header">
             <div className="header__content">
-                <button className='header__logo'>News Explorer</button>
+                {renderLogo()}
                 <nav className="nav">
                     {renderNav()}
-                    <button className="nav__signin">Entrar</button>
-                    {/* <a className="nav__logo-link" href="#">
-                    <img
-                        src={logo}
-                        alt="Logo Around The US"
-                        className="nav__logo"
-                    /> 
-                    </a>
-                    {renderNav()} */}
                 </nav>
             </div>
             <div className="header__line"></div>

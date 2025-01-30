@@ -1,5 +1,6 @@
 import editSign from '../images/EditSign.png';
 import PopupWithForm from './PopupWithForm';
+import Login from './Login';
 import ImagePopup from './ImagePopup';
 import React from 'react';
 import Card from './Card';
@@ -17,7 +18,10 @@ function Main(props) {
     return ( 
         <>
         <main className="content">
-            <Header/>
+            <Header></Header>
+            <PopupWithForm title="Entrar" name="login-popup" isLoginOpen={props.isLoginPopupOpen} onClose={props.onClose}>
+                <Login onClose={props.onClose}></Login>
+            </PopupWithForm> 
             {/* <PopupWithForm title="Editar Perfil" name="profile-popup" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
                 <EditProfile onClose={props.onClose}></EditProfile>
             </PopupWithForm> 

@@ -1,7 +1,9 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Main from './components/Main';
 import Login from './components/Login';
+import Header from "./components/Header";
 import Register from './components/Register';
+import MyArticles from './components/MyArticles'
 import ProtectedRoute from './components/ProtectedRoute';
 import React from 'react';
 import './index.css';
@@ -28,22 +30,22 @@ function App() {
 
   React.useEffect(() => {
   
-    (async () => {
-      await api.getUserInfo()
-        .then((data) => {
-          setCurrentUser(data.data);
-        })
-        .catch((err) => {
-          console.error("Erro ao obter User Info:", err);
-        });
-    })();
-      api.getInitialCards()
-        .then((result) => {
-          setCards(result.data); 
-        })
-        .catch((err) => {
-          console.error("Erro ao obter cartões iniciais:", err);
-        });
+    // (async () => {
+    //   await api.getUserInfo()
+    //     .then((data) => {
+    //       setCurrentUser(data.data);
+    //     })
+    //     .catch((err) => {
+    //       console.error("Erro ao obter User Info:", err);
+    //     });
+    // })();
+    //   api.getInitialCards()
+    //     .then((result) => {
+    //       setCards(result.data); 
+    //     })
+    //     .catch((err) => {
+    //       console.error("Erro ao obter cartões iniciais:", err);
+    //     });
 
     const token = getToken();
     if (!token) {
@@ -102,6 +104,10 @@ function App() {
         setCards([newCard.data, ...cards]);
       })
       .catch((err) => console.error(err));
+  }
+
+  function handleLoginClick() {
+    setIsLoginPopupOpen(true);
   }
 
   function handleEditProfileClick() {
@@ -194,11 +200,13 @@ function App() {
             element={
               // <ProtectedRoute>
                 <Main 
+                onLoginClick={handleLoginClick}
                 onEditProfileClick={handleEditProfileClick}
                 onAddPlaceClick={handleAddPlaceClick}
                 onEditAvatarClick={handleEditAvatarClick}
                 onDeleteCardClick={handleDeleteCardClick}
                 isEditProfilePopupOpen={isEditProfilePopupOpen}
+                isLoginPopupOpen={isLoginPopupOpen}
                 isAddPlacePopupOpen={isAddPlacePopupOpen}
                 isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                 isDeleteCardPopupOpen={isDeleteCardPopupOpen}
@@ -224,6 +232,12 @@ function App() {
             path="/signup"
             element={
               <Register handleRegistration={handleRegistration} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration}></Register>
+            }
+          />
+          <Route
+            path="/my-articles"
+            element={
+              <MyArticles handleRegistration={handleRegistration} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration}></MyArticles>
             }
           />
           <Route

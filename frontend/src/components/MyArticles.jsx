@@ -4,38 +4,38 @@ import InfoTooltip from "./InfoTooltip";
 import Header from "./Header";
 
 
-function Login(props) {
+function MyArticles({handleLogin, isLoginPopupOpen, onClose, errorRegistration}) {
 
-    // const [data, setData] = useState({
-    //     email: "",
-    //     password: "",
-    // });
+    const [data, setData] = useState({
+        email: "",
+        password: "",
+    });
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-    // };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     handleLogin(data);
-    // };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        handleLogin(data);
+    };
 
-    // function renderLoginPopup() {
-    //     if (isLoginPopupOpen) {
-    //         return (
-    //             <InfoTooltip isLoginPopupOpen={isLoginPopupOpen} onClose={onClose} errorRegistration={errorRegistration}></InfoTooltip>
-    //         )
-    //     }
-    // }
+    function renderLoginPopup() {
+        if (isLoginPopupOpen) {
+            return (
+                <InfoTooltip isLoginPopupOpen={isLoginPopupOpen} onClose={onClose} errorRegistration={errorRegistration}></InfoTooltip>
+            )
+        }
+    }
 
     return (
         <>
-        <section className="login" id="login">
-            <p>Login</p>
+        <section className="my-articles" id="my-articles">
+        <Header></Header>
             {/* <h1 className="login__title">Entrar</h1>
             <div className="login__form">
                 <form className="login__form form" name="login__form" id="login__form" onSubmit={handleSubmit}>
@@ -79,4 +79,4 @@ function Login(props) {
     )
 }
 
-export default Login;
+export default MyArticles;
