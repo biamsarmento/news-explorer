@@ -70,11 +70,9 @@ module.exports.getUserById = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const {
-    name = 'Jacques Cousteau',
-    about = 'Explorer',
-    avatar = 'https://pictures.s3.yandex.net/resources/avatar_1604080799.jpg',
     email,
     password,
+    username,
   } = req.body;
 
   if (!password) {
@@ -85,7 +83,7 @@ module.exports.createUser = (req, res, next) => {
 
   bcrypt.hash(password, 10)
     .then((hashedPassword) => User.create({
-      name, about, avatar, email, password: hashedPassword,
+      email, password: hashedPassword, username
     }))
     .then((user) => res.send({ data: user }))
     .catch((err) => {
@@ -101,42 +99,42 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
-module.exports.updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+// module.exports.updateUser = (req, res, next) => {
+//   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
-    .orFail(() => {
-      const err = new Error('Usuário não encontrado.');
-      err.status = 404;
-      throw err;
-    })
-    .then((user) => res.send({ data: user }))
-    .catch((err) => {
-      let customError = err;
-      if (err.name === 'ValidationError') {
-        customError = new Error('Erro de validação.');
-        customError.status = 400;
-      }
-      next(customError);
-    });
-};
+//   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true })
+//     .orFail(() => {
+//       const err = new Error('Usuário não encontrado.');
+//       err.status = 404;
+//       throw err;
+//     })
+//     .then((user) => res.send({ data: user }))
+//     .catch((err) => {
+//       let customError = err;
+//       if (err.name === 'ValidationError') {
+//         customError = new Error('Erro de validação.');
+//         customError.status = 400;
+//       }
+//       next(customError);
+//     });
+// };
 
-module.exports.updateUserAvatar = (req, res, next) => {
-  const { avatar } = req.body;
+// module.exports.updateUserAvatar = (req, res, next) => {
+//   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
-    .orFail(() => {
-      const err = new Error('Usuário não encontrado.');
-      err.status = 404;
-      throw err;
-    })
-    .then((user) => res.send({ data: user }))
-    .catch((err) => {
-      let customError = err;
-      if (err.name === 'ValidationError') {
-        customError = new Error('Erro de validação.');
-        customError.status = 400;
-      }
-      next(customError);
-    });
-};
+//   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
+//     .orFail(() => {
+//       const err = new Error('Usuário não encontrado.');
+//       err.status = 404;
+//       throw err;
+//     })
+//     .then((user) => res.send({ data: user }))
+//     .catch((err) => {
+//       let customError = err;
+//       if (err.name === 'ValidationError') {
+//         customError = new Error('Erro de validação.');
+//         customError.status = 400;
+//       }
+//       next(customError);
+//     });
+// };

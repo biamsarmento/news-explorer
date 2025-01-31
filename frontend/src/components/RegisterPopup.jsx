@@ -1,21 +1,21 @@
 import { useState, useContext, useEffect } from 'react'; 
 import CurrentUserContext from '../contexts/CurrentUserContext'; 
 
-export default function EditProfile(props) {
+export default function RegisterPopup(props) {
   const [isValid, setIsValid] = useState(false);
   const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
-  const [name, setName] = useState(''); 
-  const [description, setDescription] = useState(''); 
 
   const [data, setData] = useState({
     email: "",
     password: "",
+    username: "",
   });
 
   const validateForm = () => {
     const emailIsValid = data.email.includes('@') && data.email !== '';
     const passwordIsValid = data.password.length >= 5;
-    setIsValid(emailIsValid && passwordIsValid);
+    const usernameIsValid = data.username.length >=3;
+    setIsValid(emailIsValid && passwordIsValid && usernameIsValid);
   };
 
   const handleChange = (e) => {
@@ -44,7 +44,7 @@ export default function EditProfile(props) {
 
   const handleSubmit = (e) => {
         e.preventDefault();
-        props.handleLogin(data);
+        props.handleRegistration(data);
         props.onClose();
     };
 
@@ -57,9 +57,9 @@ export default function EditProfile(props) {
 
   return (
     <form 
-    className="profile-popup__form form" 
+    className="register-popup__form form" 
     name="formPopup"
-    id="profile-popup__form" 
+    id="register-popup__form" 
     onSubmit={handleSubmit}
     >
         <fieldset
@@ -90,13 +90,26 @@ export default function EditProfile(props) {
             onChange={handleChange}
             required />
             <span className="form__input-error atividade-error"></span>
+            <label className='form__input-label'>Nome de usuário</label>
+            <input 
+            type="text" 
+            placeholder='Insira seu nome de usuário'
+            className="form__input form__input_type_password" 
+            id="username" 
+            name="username" 
+            minLength="2" 
+            maxLength="15"
+            value={data.username} 
+            onChange={handleChange}
+            required />
+            <span className="form__input-error atividade-error"></span>
             <button 
             style={{
               backgroundColor: isValid ? '#2F71E5' : '#E6E8EB',
               color: isValid ? 'white' : '#B6BCBF'  // Cor do texto alterada com base na validade
             }}
             type="submit" disabled={!isValid} 
-            className="form__submit-button">Entrar</button>
+            className="form__submit-button">Inscrever-se</button>
         </fieldset>
     </form>
   );

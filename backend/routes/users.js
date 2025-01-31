@@ -13,9 +13,9 @@ router.get('/me', getCurrentUser);
 router.get('/:id', validate(userIdSchema, 'params'), getUserById);
 
 // Valida os dados enviados para atualização do usuário
-router.patch('/me', validate(updateUserSchema), updateUser);
+// router.patch('/me', validate(updateUserSchema), updateUser);
 
 // Valida os dados enviados para atualização do avatar
-router.patch('/me/avatar', validate(updateAvatarSchema), updateUserAvatar);
+// router.patch('/me/avatar', validate(updateAvatarSchema), updateUserAvatar);
 
 module.exports = router;

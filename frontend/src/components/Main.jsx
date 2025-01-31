@@ -1,5 +1,6 @@
 import editSign from '../images/EditSign.png';
 import PopupWithForm from './PopupWithForm';
+import RegisterPopup from './RegisterPopup';
 import Login from './Login';
 import ImagePopup from './ImagePopup';
 import React from 'react';
@@ -18,13 +19,19 @@ function Main(props) {
     return ( 
         <>
         <main className="content">
-            <Header onEditProfileClick={props.onEditProfileClick} onloginClick={props.onLoginClick}></Header>
-            <PopupWithForm title="Entrar" name="login-popup" isOpen={props.isLoginPopupOpen} onClose={props.onClose}>
+            <Header onEditProfileClick={props.onEditProfileClick} onRegisterClick={props.onRegisterClick} onloginClick={props.onLoginClick}></Header>
+            {/* <PopupWithForm title="Entrar" name="login-popup" link="Increva-se" isOpen={props.isLoginPopupOpen} onClose={props.onClose}>
                 <Login onClose={props.onClose}></Login>
+            </PopupWithForm>  */}
+            <PopupWithForm title="Entrar" name="profile-popup" navigate={props.onRegisterClick} link="Increva-se" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
+                <EditProfile handleLogin={props.handleLogin} onClose={props.onClose}></EditProfile>
             </PopupWithForm> 
-            <PopupWithForm title="Entrar" name="profile-popup" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
+            <PopupWithForm title="Inscrever-se" name="register-popup" navigate={props.onEditProfileClick} link="Entre" isOpen={props.isRegisterPopupOpen} onClose={props.onClose}>
+                <RegisterPopup handleRegistration={props.handleRegistration} onClose={props.onClose}></RegisterPopup>
+            </PopupWithForm>
+            {/* <PopupWithForm title="Entrar" name="profile-popup" link="Entre" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
                 <EditProfile onClose={props.onClose}></EditProfile>
-            </PopupWithForm> 
+            </PopupWithForm>  */}
             {/* <PopupWithForm title="Editar Perfil" name="profile-popup" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
                 <EditProfile onClose={props.onClose}></EditProfile>
             </PopupWithForm> 

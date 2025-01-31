@@ -13,7 +13,12 @@ function PopupWithForm(props) {
               {props.children}
           <p className={`${props.name}__text`}>
             ou 
-            <button className={`${props.name}__link`} onClick={() => navigate('/')} >Increva-se</button>
+            <button className={`${props.name}__link`} onClick={() => {
+              props.onClose();
+              props.navigate();
+            }} 
+            
+            >{props.link}</button>
           </p>
       </div>
     </section>

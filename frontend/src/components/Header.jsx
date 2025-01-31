@@ -7,13 +7,13 @@ import signout_white from '../images/logout_white.png';
 
 function Header(props) {
 
-    const { isLoggedIn, setIsLoggedIn, userData } = useContext(CurrentUserContext);
+    const { isLoggedIn, setIsLoggedIn, currentUser } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     const location = useLocation();
 
     function signOut() {
         removeToken();
-        navigate("/signin");
+        navigate("/");
         setIsLoggedIn(false);
     } 
 
@@ -39,8 +39,11 @@ function Header(props) {
                 <>
                 <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Início</button>
                 <button className='nav__my-articles nav__marcador_black nav__black'>Artigos Salvos</button>
-                <button className="nav__signout_black">
-                    <p className='nav__user_black'>Elise</p>
+                <button 
+                className="nav__signout_black"
+                onClick={signOut}
+                >
+                    <p className='nav__user_black'>{currentUser.username}</p>
                     <img
                         src={signout_black}
                         alt="signout sign"
@@ -54,8 +57,11 @@ function Header(props) {
                 <>
                 <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Início</button>
                 <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Artigos Salvos</button>
-                <button className="nav__signout">
-                    <p className='nav__user'>Elise</p>
+                <button 
+                className="nav__signout"
+                onClick={signOut}
+                >
+                    <p className='nav__user'>{currentUser.username}</p>
                     <img
                         src={signout_white}
                         alt="signout sign"
