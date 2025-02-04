@@ -21,6 +21,8 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = React.useState(false);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] = React.useState(false);
+  const [isRegistrationSuccessfulPopupOpen, setIsRegistrationSuccessfulPopupOpen] = React.useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [errorRegistration, setErrorRegistration] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -145,6 +147,7 @@ function App() {
     setIsLoginPopupOpen(false);
     setErrorRegistration(false);
     setIsRegisterPopupOpen(false);
+    setIsRegistrationSuccessfulPopupOpen(false);
   }
 
   const handleRegistration = ({
@@ -156,10 +159,11 @@ function App() {
     auth
       .register(email, password, username)
       .then(() => {
-        // setIsLoginPopupOpen(true); 
+        setIsRegistrationSuccessful(true); 
+        setIsRegistrationSuccessfulPopupOpen(true); 
       })
       .catch((error) => {
-        // setIsLoginPopupOpen(true); 
+        setIsRegistrationSuccessful(false); 
         setErrorRegistration(true);
       });
   };
@@ -230,6 +234,8 @@ function App() {
                 userData={userData}
                 handleLogin={handleLogin}
                 handleRegistration={handleRegistration}
+                isRegistrationSuccessful={isRegistrationSuccessful}
+                isRegistrationSuccessfulPopupOpen={isRegistrationSuccessfulPopupOpen}
                 ></Main>
               // </ProtectedRoute>
             }

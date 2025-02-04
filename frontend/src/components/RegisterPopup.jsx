@@ -1,9 +1,9 @@
 import { useState, useContext, useEffect } from 'react'; 
-import CurrentUserContext from '../contexts/CurrentUserContext'; 
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import InfoTooltip from './InfoTooltip'; 
 
 export default function RegisterPopup(props) {
   const [isValid, setIsValid] = useState(false);
-  const [isButtonValid, setIsButtonValid] = useState(false);
   const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
@@ -79,6 +79,7 @@ export default function RegisterPopup(props) {
   };
 
   return (
+    <>
     <form 
     className="register-popup__form form" 
     name="formPopup"
@@ -135,11 +136,12 @@ export default function RegisterPopup(props) {
             <button 
             style={{
               backgroundColor: isValid ? '#2F71E5' : '#E6E8EB',
-              color: isValid ? 'white' : '#B6BCBF'  // Cor do texto alterada com base na validade
+              color: isValid ? 'white' : '#B6BCBF' 
             }}
             type="submit" disabled={!isValid} 
             className="form__submit-button">Inscrever-se</button>
         </fieldset>
     </form>
+    </>
   );
 }

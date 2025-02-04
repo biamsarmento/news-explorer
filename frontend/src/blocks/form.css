@@ -130,6 +130,7 @@
   width: 358px;
   height: 64px;
   border-radius: 100px;
+  cursor: pointer;
 }
 
 .form__submit-button_inactive {

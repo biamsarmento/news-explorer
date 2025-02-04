@@ -3,6 +3,7 @@ import RegisterPopup from './RegisterPopup';
 import SearchBar from './SearchBar';
 import React from 'react';
 import EditProfile from './EditProfile';
+import InfoTooltip from './InfoTooltip';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Footer from './Footer';
@@ -11,6 +12,19 @@ import avatar from '../images/author_avatar.png';
 function Main(props) {
 
     const {currentUser} = React.useContext(CurrentUserContext);
+
+    const handleSuccessfulRegistration = () => {
+        if(props.isRegistrationSuccessful) {
+            console.log("Registration Successful!");
+            return (
+            <InfoTooltip 
+            isRegistrationSuccesssul={props.isRegistrationSuccessful} 
+            isRegistrationSuccessfulPopupOpen={props.isRegistrationSuccessfulPopupOpen} 
+            navigate={props.onEditProfileClick}
+            onClose={props.onClose}></InfoTooltip>
+            )
+        }
+    }
 
     return ( 
         <>
@@ -40,8 +54,9 @@ function Main(props) {
                 <EditProfile handleLogin={props.handleLogin} isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}></EditProfile>
             </PopupWithForm> 
             <PopupWithForm title="Inscrever-se" name="register-popup" navigate={props.onEditProfileClick} link="Entre" isOpen={props.isRegisterPopupOpen} onClose={props.onClose}>
-                <RegisterPopup handleRegistration={props.handleRegistration} isOpen={props.isRegisterPopupOpen} onClose={props.onClose}></RegisterPopup>
+                <RegisterPopup isRegistrationSuccessfulPopupOpen={props.isRegistrationSuccessfulPopupOpen} isRegistrationSuccessful={props.isRegistrationSuccessful} handleRegistration={props.handleRegistration} isOpen={props.isRegisterPopupOpen} onClose={props.onClose}></RegisterPopup>
             </PopupWithForm>
+            {handleSuccessfulRegistration()}
             {/* <PopupWithForm title="Entrar" name="profile-popup" link="Entre" isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
                 <EditProfile onClose={props.onClose}></EditProfile>
             </PopupWithForm>  */}
