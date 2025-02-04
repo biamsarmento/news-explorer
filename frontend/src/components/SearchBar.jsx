@@ -1,11 +1,20 @@
 import { useState } from "react";
+import api_news from "../utils/api_news";
 
 export default function SearchBar({ onSearch }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(query);
+    
+    api_news.newsSearch(query)
+      .then((data) => {
+          console.log("Notícias encontradas:", data.articles);
+      })
+      .catch((error) => {
+          console.error("Erro ao buscar notícias:", error);
+      });
+
   };
 
   return (
@@ -24,3 +33,18 @@ export default function SearchBar({ onSearch }) {
     </form>
   );
 }
+
+// import api_news from "./apiNews"; // Importa a instância da API
+
+// // Palavra-chave para a pesquisa
+// const keyword = "cake";
+
+// // Chamando a API para buscar notícias
+// api_news.newsSearch(keyword)
+//     .then((data) => {
+//         console.log("Notícias encontradas:", data.articles);
+//     })
+//     .catch((error) => {
+//         console.error("Erro ao buscar notícias:", error);
+//     });
+

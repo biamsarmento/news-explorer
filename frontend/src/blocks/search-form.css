@@ -43,6 +43,11 @@
     box-shadow: 0px 5px 15px 0px #0E1A3933;
 }
 
+.search-form__button:hover {
+    background-color: #347EFF;
+    border: 1px solid #347EFF;
+}
+
 .search-form__button_text {
     margin: 0;
     font-family: Roboto;
