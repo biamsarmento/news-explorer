@@ -3,7 +3,8 @@ import CurrentUserContext from '../contexts/CurrentUserContext';
 
 export default function RegisterPopup(props) {
   const [isValid, setIsValid] = useState(false);
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
+  const [isButtonValid, setIsButtonValid] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [data, setData] = useState({
     email: "",
@@ -11,11 +12,44 @@ export default function RegisterPopup(props) {
     username: "",
   });
 
-  const validateForm = () => {
-    const emailIsValid = data.email.includes('@') && data.email !== '';
-    const passwordIsValid = data.password.length >= 5;
-    const usernameIsValid = data.username.length >=3;
-    setIsValid(emailIsValid && passwordIsValid && usernameIsValid);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{6,15}$/;
+  const usernameRegex = /^[a-zA-Z0-9_]{3,10}$/;
+
+  const validateForm = (name, value) => {
+    let errorMsg = "";
+
+    if (name === "email") {
+      if (!emailRegex.test(value)) {
+        errorMsg = "E-mail inválido";
+      }
+    } else if (name === "password") {
+      if (!passwordRegex.test(value)) {
+        errorMsg = "A senha deve ter pelo menos 6 caracteres";
+      }
+    } else if (name === "username") {
+      if (value.length < 3) {
+        errorMsg = "O nome de usuário deve ter pelo menos 3 caracteres";
+      } else if (/\s/.test(value)) {  
+        errorMsg = "O nome de usuário não pode conter espaços";
+      } else if (!usernameRegex.test(value)) {
+        errorMsg = "O nome de usuário pode conter apenas letras, números e underscores";
+      }
+    }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: errorMsg,
+    }));
+
+    // Atualiza a validade geral do formulário
+    setIsValid(
+      emailRegex.test(data.email) &&
+      passwordRegex.test(data.password) &&
+      usernameRegex.test(data.username)
+    );
+
+    console.log("isValid: ", isValid);
   };
 
   const handleChange = (e) => {
@@ -24,36 +58,25 @@ export default function RegisterPopup(props) {
         ...prevData,
         [name]: value,
     }));
-    validateForm();
+    validateForm(name, value);
   };
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setName(currentUser.name); 
-  //     setDescription(currentUser.about); 
-  //   }
-  // }, [currentUser]); 
-
-  // const handleNameChange = (event) => {
-  //   setName(event.target.value); 
-  // };
-
-  // const handleDescriptionChange = (event) => {
-  //   setDescription(event.target.value); 
-  // };
+  useEffect(() => {
+    if (!props.isOpen) {
+      setData({ email: "", password: "", username: "" });
+      setErrors({});
+      setIsValid(false);
+    }
+  }, [props.isOpen]);
 
   const handleSubmit = (e) => {
-        e.preventDefault();
-        props.handleRegistration(data);
-        props.onClose();
-    };
-
-  // async function handleSubmit(event) {
-  //   event.preventDefault(); 
-
-  //   await handleUpdateUser({ name, about: description }); 
-  //   props.onClose();
-  // };
+    e.preventDefault();
+    console.log("isValid? ", isValid);
+    if (isValid) {
+      props.handleRegistration(data);
+      props.onClose();
+    }
+  };
 
   return (
     <form 
@@ -76,7 +99,9 @@ export default function RegisterPopup(props) {
             value={data.email}
             onChange={handleChange}
             required />
-            <span className="form__input-error nome-error"></span>
+            <span className={`form__input-error ${errors.email ? "form__input-error_active" : ""}`}>
+              {errors.email}
+            </span>
             <label className='form__input-label'>Senha</label>
             <input 
             type="password" 
@@ -89,7 +114,9 @@ export default function RegisterPopup(props) {
             value={data.password} 
             onChange={handleChange}
             required />
-            <span className="form__input-error atividade-error"></span>
+            <span className={`form__input-error ${errors.password ? "form__input-error_active" : ""}`}>
+              {errors.password}
+            </span>
             <label className='form__input-label'>Nome de usuário</label>
             <input 
             type="text" 
@@ -102,7 +129,9 @@ export default function RegisterPopup(props) {
             value={data.username} 
             onChange={handleChange}
             required />
-            <span className="form__input-error atividade-error"></span>
+            <span className={`form__input-error ${errors.username ? "form__input-error_active" : ""}`}>
+              {errors.username}
+            </span>
             <button 
             style={{
               backgroundColor: isValid ? '#2F71E5' : '#E6E8EB',

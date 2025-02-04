@@ -23,7 +23,7 @@
   align-items: center;
   box-sizing: border-box;
   position: fixed;
-  top: calc((100vh - 330px) / 2);
+  top: calc((100vh - 330px) / 2 - 85px);
   width: 430px;
   height: 380px;
   background-color: #FFFFFF;
@@ -43,8 +43,8 @@
   width: 25px;
   height: 25px;
   position: fixed;
-  top: calc(((100vh - 380px) / 2) - 19px);
-  right: calc(((100% - 430px) / 2) - 49px);
+  top: calc(((100vh - 380px) / 2) - 105px);
+  right: calc(((100% - 430px) / 2) - 40px);
   padding: 0;
   border: 0;
   cursor: pointer;

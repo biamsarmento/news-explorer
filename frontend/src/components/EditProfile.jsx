@@ -1,21 +1,44 @@
-import { useState, useContext, useEffect } from 'react'; 
-import CurrentUserContext from '../contexts/CurrentUserContext'; 
+import { useState, useEffect } from 'react'; 
 
 export default function EditProfile(props) {
   const [isValid, setIsValid] = useState(false);
-  const { currentUser, handleUpdateUser } = useContext(CurrentUserContext);
-  const [name, setName] = useState(''); 
-  const [description, setDescription] = useState(''); 
-
+  const [isButtonValid, setIsButtonValid] = useState(false);
+  const [errors, setErrors] = useState({});
   const [data, setData] = useState({
     email: "",
     password: "",
   });
 
-  const validateForm = () => {
-    const emailIsValid = data.email.includes('@') && data.email !== '';
-    const passwordIsValid = data.password.length >= 5;
-    setIsValid(emailIsValid && passwordIsValid);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const passwordRegex = /^.{6,15}$/;
+
+  const validateForm = (name, value) => {
+      let errorMsg = "";
+
+      if (name === "email") {
+        if (!emailRegex.test(value)) {
+          errorMsg = "E-mail inválido";
+          // setIsValid(false);
+          // return
+        }
+      } else if (name === "password") {
+        // if (!(value.length > 5 && value.length < 16)) {
+        if (!passwordRegex.test(value)) {
+          errorMsg = "A senha deve ter pelo menos 6 caracteres";
+          // setIsValid(false);
+          // return
+        }
+      }
+
+      setErrors((prevErrors) => ({
+          ...prevErrors,
+          [name]: errorMsg,
+      }));
+
+      // Atualizar a validade do formulário
+      // setIsValid(emailRegex.test(data.email) && (data.password.length > 5 && data.password.length < 16));
+      setIsValid(emailRegex.test(data.email) && passwordRegex.test(data.password));
+      // setIsValid(true);
   };
 
   const handleChange = (e) => {
@@ -23,37 +46,25 @@ export default function EditProfile(props) {
     setData((prevData) => ({
         ...prevData,
         [name]: value,
-    }));
-    validateForm();
+    }), validateForm(name, value));
+    validateForm(name, value);
   };
 
-  // useEffect(() => {
-  //   if (currentUser) {
-  //     setName(currentUser.name); 
-  //     setDescription(currentUser.about); 
-  //   }
-  // }, [currentUser]); 
-
-  // const handleNameChange = (event) => {
-  //   setName(event.target.value); 
-  // };
-
-  // const handleDescriptionChange = (event) => {
-  //   setDescription(event.target.value); 
-  // };
+  useEffect(() => {
+    if (!props.isOpen) {
+      setData({ email: "", password: "" });
+      setErrors({});
+      setIsValid(false);
+    }
+  }, [props.isOpen]);
 
   const handleSubmit = (e) => {
-        e.preventDefault();
-        props.handleLogin(data);
-        props.onClose();
-    };
-
-  // async function handleSubmit(event) {
-  //   event.preventDefault(); 
-
-  //   await handleUpdateUser({ name, about: description }); 
-  //   props.onClose();
-  // };
+    e.preventDefault();
+    if (isValid) {
+      props.handleLogin(data);
+      props.onClose();
+    }
+  };
 
   return (
     <form 
@@ -71,12 +82,14 @@ export default function EditProfile(props) {
             className="form__input form__input_type_email" 
             id="email" 
             name="email"
-            minLength="2" 
-            maxLength="40" 
+            minLength="4" 
+            maxLength="25" 
             value={data.email}
             onChange={handleChange}
             required />
-            <span className="form__input-error nome-error"></span>
+            <span className={`form__input-error ${errors.email ? "form__input-error_active" : ""}`}>
+              {errors.email}
+            </span>
             <label className='form__input-label'>Senha</label>
             <input 
             type="password" 
@@ -84,12 +97,14 @@ export default function EditProfile(props) {
             className="form__input form__input_type_password" 
             id="password" 
             name="password" 
-            minLength="2" 
-            maxLength="18"
+            minLength="6" 
+            maxLength="15"
             value={data.password} 
             onChange={handleChange}
             required />
-            <span className="form__input-error atividade-error"></span>
+            <span className={`form__input-error ${errors.password ? "form__input-error_active" : ""}`}>
+              {errors.password}
+            </span>
             <button 
             style={{
               backgroundColor: isValid ? '#2F71E5' : '#E6E8EB',

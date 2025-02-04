@@ -1,5 +1,6 @@
 @import url("./vendor/normalize.css");
 @import url("./vendor/fonts.css");
+@import url("./blocks/author.css");
 @import url("./blocks/card.css");
 @import url("./blocks/content.css");
 @import url("./blocks/delete-popup.css");
@@ -20,4 +21,6 @@
 @import url("./blocks/profile.css");
 @import url("./blocks/register-popup.css");
 @import url("./blocks/register.css");
+@import url("./blocks/search-form.css");
+@import url("./blocks/search.css");
 
