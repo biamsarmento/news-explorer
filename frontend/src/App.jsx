@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Main from './components/Main';
 import Login from './components/Login';
+import Header from "./components/Header";
 import Register from './components/Register';
+import MyArticles from './components/MyArticles'
+import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import React from 'react';
 import './index.css';
@@ -14,6 +17,7 @@ function App() {
 
   const [cards, setCards] = React.useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
+  const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = React.useState(false);
@@ -22,7 +26,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState('');
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [userData, setUserData] = React.useState({ email: "" });
+  const [userData, setUserData] = React.useState({ email: "", username: "" });
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,13 +41,13 @@ function App() {
           console.error("Erro ao obter User Info:", err);
         });
     })();
-      api.getInitialCards()
-        .then((result) => {
-          setCards(result.data); 
-        })
-        .catch((err) => {
-          console.error("Erro ao obter cartões iniciais:", err);
-        });
+      // api.getInitialCards()
+      //   .then((result) => {
+      //     setCards(result.data); 
+      //   })
+      //   .catch((err) => {
+      //     console.error("Erro ao obter cartões iniciais:", err);
+      //   });
 
     const token = getToken();
     if (!token) {
@@ -52,7 +56,7 @@ function App() {
       auth
         .retrieveEmail(token)
         .then((data) => {
-          setUserData({email: data.data.email});
+          setUserData({email: data.data.email, username: data.data.username});
           setIsLoggedIn(true);
           const redirectPath = location.state?.from?.pathname || "/";
           navigate(redirectPath);
@@ -104,6 +108,14 @@ function App() {
       .catch((err) => console.error(err));
   }
 
+  function handleLoginClick() {
+    setIsLoginPopupOpen(true);
+  }
+
+  function handleRegisterClick() {
+    setIsRegisterPopupOpen(true);
+  }
+
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
@@ -132,20 +144,22 @@ function App() {
     setDeleteCardPopupOpen(false);
     setIsLoginPopupOpen(false);
     setErrorRegistration(false);
+    setIsRegisterPopupOpen(false);
   }
 
   const handleRegistration = ({
     email,
     password,
+    username,
   }) => {
     
     auth
-      .register(email, password)
+      .register(email, password, username)
       .then(() => {
-        setIsLoginPopupOpen(true); 
+        // setIsLoginPopupOpen(true); 
       })
       .catch((error) => {
-        setIsLoginPopupOpen(true); 
+        // setIsLoginPopupOpen(true); 
         setErrorRegistration(true);
       });
   };
@@ -164,15 +178,15 @@ function App() {
           auth 
             .retrieveEmail(data.token)
             .then(async (data) => {
-              setUserData({email: data.data.email});
+              setUserData({email: data.data.email, username: data.data.username});
               setCurrentUser(data.data);
-              api.getInitialCards()
-                .then((result) => {
-                  setCards(result.data); 
-                })
-                .catch((err) => {
-                  console.error("Erro ao obter cartões iniciais:", err);
-                });
+              // api.getInitialCards()
+              //   .then((result) => {
+              //     setCards(result.data); 
+              //   })
+              //   .catch((err) => {
+              //     console.error("Erro ao obter cartões iniciais:", err);
+              //   });
               const redirectPath = location.state?.from?.pathname || "/";
               navigate(redirectPath);
             })
@@ -194,11 +208,15 @@ function App() {
             element={
               // <ProtectedRoute>
                 <Main 
+                onLoginClick={handleLoginClick}
                 onEditProfileClick={handleEditProfileClick}
+                onRegisterClick={handleRegisterClick}
                 onAddPlaceClick={handleAddPlaceClick}
                 onEditAvatarClick={handleEditAvatarClick}
                 onDeleteCardClick={handleDeleteCardClick}
                 isEditProfilePopupOpen={isEditProfilePopupOpen}
+                isRegisterPopupOpen={isRegisterPopupOpen}
+                isLoginPopupOpen={isLoginPopupOpen}
                 isAddPlacePopupOpen={isAddPlacePopupOpen}
                 isEditAvatarPopupOpen={isEditAvatarPopupOpen}
                 isDeleteCardPopupOpen={isDeleteCardPopupOpen}
@@ -210,20 +228,31 @@ function App() {
                 onCardDelete={handleCardDelete}
                 onAddPlaceSubmit={handleAddPlaceSubmit}
                 userData={userData}
+                handleLogin={handleLogin}
+                handleRegistration={handleRegistration}
                 ></Main>
               // </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/signin"
-            element={
-              <Login handleLogin={handleLogin} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration} ></Login>
-            }
-          />
-          <Route
+            // element={
+            //   <Login handleLogin={handleLogin} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration} ></Login>
+            // }
+          /> */}
+          {/* <Route
             path="/signup"
             element={
               <Register handleRegistration={handleRegistration} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration}></Register>
+            }
+          /> */}
+          <Route
+            path="/my-articles"
+            element={
+              <>
+              <MyArticles handleRegistration={handleRegistration} onClose={closeAllPopups} errorRegistration={errorRegistration}></MyArticles>
+              <Footer></Footer>
+              </>
             }
           />
           <Route
@@ -232,7 +261,7 @@ function App() {
               isLoggedIn ? (
                 <Navigate to="/" replace />
               ) : (
-                <Navigate to="/signin" replace />
+                <Navigate to="/" replace />
               )
             }
           />

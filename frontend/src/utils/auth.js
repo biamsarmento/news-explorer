@@ -1,10 +1,10 @@
 // export const BASE_URL = "https://register.nomoreparties.co";
-// export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = "https://api.bmsproject.mooo.com";
+export const BASE_URL = "http://localhost:3000";
+// export const BASE_URL = "https://api.bmsproject.mooo.com";
 
 // A função register aceita os dados necessários como argumentos
 // e envia uma solicitação POST ao endpoint especificado.
-export const register = (email, password) => {
+export const register = (email, password, username) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
@@ -12,7 +12,7 @@ export const register = (email, password) => {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, username }),
   })
     .then((res) => {
       return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);

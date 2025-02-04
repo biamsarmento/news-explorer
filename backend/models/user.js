@@ -3,25 +3,6 @@ const validator = require('validator');
 const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-  },
-  about: {
-    type: String,
-    minlength: 2,
-    maxlength: 30,
-  },
-  avatar: {
-    type: String,
-    validate: {
-      validator(v) {
-        return /^(http:\/\/|https:\/\/)(www\.)?[\w\-.~:/?%#[\]@!$&'()*+,;=]+#?$/.test(v);
-      },
-      message: (props) => `${props.value} Esse link não é válido!`,
-    },
-  },
   email: {
     type: String,
     required: true,
@@ -36,19 +17,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model('user', userSchema);
 
 // Validação com Joi
 const userValidationSchema = Joi.object({
-  name: Joi.string().min(2).max(30).required(),
-  about: Joi.string().min(2).max(30).required(),
-  avatar: Joi.string()
-    .uri()
-    .pattern(/^(http:\/\/|https:\/\/)(www\.)?[\w\-.~:/?%#[\]@!$&'()*+,;=]+#?$/)
-    .message('O avatar precisa ser uma URL válida.')
-    .required(),
   email: Joi.string().email().required().messages({
     'string.email': 'O e-mail fornecido não é válido.',
     'any.required': 'O e-mail é obrigatório.',
@@ -56,6 +35,10 @@ const userValidationSchema = Joi.object({
   password: Joi.string().min(8).required().messages({
     'string.min': 'A senha deve conter no mínimo 8 caracteres.',
     'any.required': 'A senha é obrigatória.',
+  }),
+  username: Joi.string().min(3).required().messages({
+    'string.min': 'O nome de usuário não é válido',
+    'any.required': 'O nome de usuário é obrigatório.',
   }),
 });
 

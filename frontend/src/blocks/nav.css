@@ -8,19 +8,6 @@
   gap: 46px;
 }
 
-/* .nav__logo-link {
-  box-sizing: border-box;
-  cursor: pointer;
-  margin: 0;
-  padding: 0;
-}
-
-.nav__logo {
-  box-sizing: border-box;
-  cursor: pointer;
-  margin-bottom: 40px;
-} */
-
 .nav__inicio {
   padding: 0;
   border: 0;
@@ -53,12 +40,18 @@
   cursor: pointer;
 }
 
-
 .nav__marcador {
   padding: 25px 10px;
   border-bottom: 3px solid white;
-  /* margin-bottom: 45px; */
-  /* color: white; */
+}
+
+.nav__marcador_black {
+  padding: 25px 10px;
+  border-bottom: 3px solid black;
+}
+
+.nav__black {
+  color: black;
 }
 
 .nav__signin {
@@ -83,26 +76,102 @@
   cursor: pointer;
 }
 
-/* .nav__logged-in {
+.nav__signout {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 56px;
-  margin-bottom: 40px;
-}
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+  background-color: transparent;
 
-.nav__logged-in__email {
-  color: white;
-  font-family: Inter;
+  font-family: Roboto;
   font-size: 18px;
   font-weight: 500;
-  line-height: 22px;
-  text-align: right; 
+  line-height: 24px;
+  text-align: center;
   text-underline-position: from-font;
+  text-decoration-skip-ink: none; 
+  color: white;
+
+  min-width: 136px;
+  max-width: 200px;
+  overflow: hidden;
+  height: 48px;
+  top: 19px;
+  left: 1160px;
+  border-radius: 100px;
+  border: 1px solid #ffffff;
+  opacity: 0px;
+  cursor: pointer;
+}
+
+.nav__signout_black {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  padding: 10px;
+  background-color: transparent;
+
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none; 
+  color: black;
+
+  min-width: 136px;
+  max-width: 200px;
+  overflow: hidden;
+  height: 48px;
+  top: 19px;
+  left: 1160px;
+  border-radius: 100px;
+  border: 1px solid #000000;
+  opacity: 0px;
+  cursor: pointer;
+}
+
+
+.nav__signout-sign {
+  width: 24px;
+  height: 24px;
+  top: 31px;
+  left: 1297px;
+}
+
+.nav__user {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: white;
   margin: 0;
   padding: 0;
-} */
+  max-width: 160px;
+  overflow: hidden;
+}
+
+.nav__user_black {
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: black;
+  margin: 0;
+  padding: 0;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .nav__logged-in__sair {
   color: #A9A9A9;
@@ -117,19 +186,6 @@
   border: 0;
   cursor: pointer;
 }
-
-/* .nav__signup,
-.nav__signin {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  color: white;
-  font-family: Inter;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 22px;
-  text-align: right;
-} */
 
 .nav__button {
   cursor: pointer;
