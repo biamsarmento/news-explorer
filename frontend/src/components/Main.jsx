@@ -1,17 +1,93 @@
+import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import RegisterPopup from './RegisterPopup';
 import SearchBar from './SearchBar';
-import React from 'react';
+import Card from './Card';
 import EditProfile from './EditProfile';
 import InfoTooltip from './InfoTooltip';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Footer from './Footer';
 import avatar from '../images/author_avatar.png';
+import not_found from '../images/not-found_v1.png';
 
 function Main(props) {
 
     const {currentUser} = React.useContext(CurrentUserContext);
+    console.log("Results: ", props.results.articles);
+    const isLoading = true;
+
+    const preLoader = () => {
+        while(props.isPreLoader) {
+            return(
+                <>
+                    <section className="results_on">
+                        <div className="results__container">
+                            <div className="results__preloader">
+                                <i className="circle-preloader"></i>
+                                <p className="results__preloader_text">Procurando notícias...</p>
+                            </div>
+                        </div>
+                    </section>
+                </>
+               
+            )
+        }
+        props.setIsPreLoader(false);
+    };
+
+    const resultsRenderer = () => {
+        if(props.isResult) {
+            // props.setIsResult(null);
+            return (
+                <>
+                    <section className="results_on">
+                        <div className="results__container">
+                            <div className="results__cards">
+                                <h2 className="results__cards_title">Resultados</h2>
+        
+                                {props.results.articles.map((card) => {
+                                    return (
+                                        <Card
+                                            key={card.title} // Se necessário, adicione uma chave única para cada Card
+                                            image={card.urlToImage}
+                                            date={card.publishedAt}
+                                            title={card.title}
+                                            description={card.description}
+                                            source={card.source.name}
+                                            onDeleteCardClick={props.onDeleteCardClick}
+                                            onCardDelete={props.onCardDelete}
+                                            onCardLike={props.onCardLike}
+                                            onCardClick={props.onCardClick}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </section>
+                </>
+            );
+
+        } else if(props.isResult == false) {
+            // props.setIsResult(null);
+            return (
+                <>
+                    <section className="results_on">
+                        <div className="results__container">
+                            <div className="results__not-found">
+                                <img className='results__not-found_image' src={not_found} alt="icone image not found"/>
+                                <h2 className="results__not-found_title">Nada encontrado</h2>
+                                <p className="results__not-found_subtitle">Desculpe, mas nada corresponde aos seus <br/>termos de pesquisa.</p>
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )
+        } else {
+            props.setIsResult(null);
+            return;
+        }
+    };
 
     const handleSuccessfulRegistration = () => {
         if(props.isRegistrationSuccessful) {
@@ -24,19 +100,29 @@ function Main(props) {
             onClose={props.onClose}></InfoTooltip>
             )
         }
-    }
+    };
 
     return ( 
         <>
         <main className="content">
-            <Header onEditProfileClick={props.onEditProfileClick} onRegisterClick={props.onRegisterClick} onloginClick={props.onLoginClick}></Header>
             <section className='search' id='search'>
-                <div className="search__texts">
-                    <h1 className="search__title">O que está <br /> acontecendo no mundo?</h1>
-                    <p className="search__subtitle">Encontre as últimas notícias sobre qualquer tema e salve elas em sua conta pessoal</p>
+                <Header onEditProfileClick={props.onEditProfileClick} onRegisterClick={props.onRegisterClick} onloginClick={props.onLoginClick}></Header>
+                <div className="search__container">
+                    <div className="search__texts">
+                        <h1 className="search__title">O que está <br /> acontecendo no mundo?</h1>
+                        <p className="search__subtitle">Encontre as últimas notícias sobre qualquer tema e salve elas em sua conta pessoal</p>
+                    </div>
+                    <SearchBar setIsResult={props.setIsResult} setIsPreLoader={props.setIsPreLoader} handleSearch={props.handleSearch}></SearchBar>
                 </div>
-                <SearchBar></SearchBar>
             </section>
+            {preLoader()}
+            {resultsRenderer()}
+            {/* <section className="results_on">
+                <div className="results__container">
+                    {preLoader()}
+                    {resultsRenderer()}
+                </div>
+            </section> */}
             <section className="author">
                 <div className="author__content">
                     <img src={avatar} alt="" className="author__avatar" />

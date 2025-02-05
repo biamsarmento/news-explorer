@@ -1,14 +1,15 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Main from './components/Main';
-import Login from './components/Login';
-import Header from "./components/Header";
-import Register from './components/Register';
+// import Login from './components/Login';
+// import Header from "./components/Header";
+// import Register from './components/Register';
 import MyArticles from './components/MyArticles'
 import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import React from 'react';
 import './index.css';
 import api from './utils/api';
+import api_news from "./utils/api_news";
 import * as auth from './utils/auth';
 import { getToken, setToken } from "./utils/token";
 import CurrentUserContext from './contexts/CurrentUserContext';
@@ -28,6 +29,9 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState('');
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isResult, setIsResult] = React.useState(null);
+  const [isPreLoader, setIsPreLoader] = React.useState(false);
+  const [results, setResults] = React.useState([]);
   const [userData, setUserData] = React.useState({ email: "", username: "" });
   const navigate = useNavigate();
   const location = useLocation();
@@ -150,6 +154,24 @@ function App() {
     setIsRegistrationSuccessfulPopupOpen(false);
   }
 
+  const handleSearch = (query) => {
+    api_news.newsSearch(query)
+      .then((data) => {
+          console.log("Notícias encontradas:", data.articles);
+          if(data.articles.length > 0) {
+            setIsResult(true);
+            setIsPreLoader(false);
+            setResults(data);
+          } else if (data.articles.length === 0) {
+            setIsResult(false);
+            setIsPreLoader(false);
+          }
+      })
+      .catch((error) => {
+          console.error("Erro ao buscar notícias:", error);
+      });
+  }
+
   const handleRegistration = ({
     email,
     password,
@@ -236,6 +258,13 @@ function App() {
                 handleRegistration={handleRegistration}
                 isRegistrationSuccessful={isRegistrationSuccessful}
                 isRegistrationSuccessfulPopupOpen={isRegistrationSuccessfulPopupOpen}
+                handleSearch={handleSearch}
+                isResult={isResult}
+                setIsResult={setIsResult}
+                results={results}
+                setResults={setResults}
+                isPreLoader={isPreLoader}
+                setIsPreLoader={setIsPreLoader}
                 ></Main>
               // </ProtectedRoute>
             }

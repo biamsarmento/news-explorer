@@ -1,15 +1,15 @@
 .card {
-  border-radius: 10px;
-  width: 282px;
-  height: 361px;
+  border-radius: 16px;
+  width: 400px;
+  height: 576px;
   background-color: #FFFFFF;
   box-shadow: 0px 0px 25px 0px #00000026;
   box-sizing: border-box;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  gap: 25px;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .card__delete-button_visible {
@@ -39,43 +39,97 @@
   opacity: 60%;
 }
 
-.card__image-link {
-  border: 0;
-  padding: 0;
-  margin: 0;
-  background-color: transparent;
-  cursor: pointer;
-}
-
 .card__image {
-  width: 282px;
-  height: 282px;
-  border-radius: 10px 10px 0 0;
+  width: 400px;
+  height: 272px;
+  max-height: 272px;
   object-fit: cover;
+  border-radius: 16px 16px 0 0; 
 }
 
 .card__tag {
   box-sizing: border-box;
   position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 246px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 400px;
+  height: 284px;
   margin: 0 auto;
-  vertical-align: middle;
+  /* vertical-align: middle; */
+  padding: 0 24px 24px 24px;
+}
+
+.card__tag-date {
+  font-family: Source Sans Pro;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  
+  margin: 0;
+  padding: 0;
+  color: #B6BCBF;
+  margin-bottom: 12px;
 }
 
 .card__tag-title {
-  font-family: "Inter", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  line-height: 29.05px;
+  font-family: Roboto Slab;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 30px;
   text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  max-height: 90px;
+
   margin: 0;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  padding: 0;
+  color: #000000;
+  margin-bottom: 8px;
   overflow: hidden;
-  width: calc(246px - 21px);
+  text-overflow: ellipsis;
+}
+
+.card__tag-description {
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  max-height: 88px;
+
+  margin: 0;
+  padding: 0;
+  color: #000000;  
+  margin-bottom: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card__tag-source {
+  font-family: Roboto Slab;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.4000000059604645px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+
+  margin: 0;
+  padding: 0;
+  color: #B6BCBF; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: auto;
 }
 
 .card__tag-likes {

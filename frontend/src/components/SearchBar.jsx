@@ -1,20 +1,14 @@
 import { useState } from "react";
 import api_news from "../utils/api_news";
 
-export default function SearchBar({ onSearch }) {
+export default function SearchBar({ handleSearch, setIsPreLoader, setIsResult }) {
   const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    api_news.newsSearch(query)
-      .then((data) => {
-          console.log("Notícias encontradas:", data.articles);
-      })
-      .catch((error) => {
-          console.error("Erro ao buscar notícias:", error);
-      });
-
+    setIsPreLoader(true);
+    setIsResult(null);
+    handleSearch(query);
   };
 
   return (
