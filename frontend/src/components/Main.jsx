@@ -38,7 +38,6 @@ function Main(props) {
 
     const resultsRenderer = () => {
         if(props.isResult) {
-            // props.setIsResult(null);
             return (
                 <>
                     <section className="results_on">
@@ -46,10 +45,11 @@ function Main(props) {
                             <div className="results__cards">
                                 <h2 className="results__cards_title">Resultados</h2>
         
-                                {props.results.articles.map((card) => {
+                                {props.results.articles.map((card, index) => {
                                     return (
                                         <Card
-                                            key={card.title} // Se necessário, adicione uma chave única para cada Card
+                                            index={index}
+                                            key={card.title} 
                                             image={card.urlToImage}
                                             date={card.publishedAt}
                                             title={card.title}
@@ -63,13 +63,15 @@ function Main(props) {
                                     );
                                 })}
                             </div>
+                            <button className="results__cards_button">
+                                Mostrar mais
+                            </button>
                         </div>
                     </section>
                 </>
             );
 
         } else if(props.isResult == false) {
-            // props.setIsResult(null);
             return (
                 <>
                     <section className="results_on">

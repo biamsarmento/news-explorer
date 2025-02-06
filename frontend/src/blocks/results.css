@@ -19,9 +19,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    grid-template-columns: repeat(3, auto);
-    grid-template-rows: repeat(2, auto);
-    gap: 20px 17px;
+    align-items: center;
+    padding-bottom: 80px;
 }
  
 /* NOT FOUND */
@@ -72,27 +71,55 @@
     position: relative;
     display: grid;
     grid-template-columns: repeat(3, 400px);
-    grid-template-rows: repeat(2, auto);
+    grid-template-rows: repeat(3, auto);
     gap: 16px;
-    padding: 80px 104px;
+    padding: 80px 104px 64px 104px;
     justify-content: center;
 }
 
 .results__cards_title {
-    font-family: Roboto Slab;
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 46px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
+  font-family: Roboto Slab;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 46px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
 
-    margin: 0;
-    margin-bottom: 48px;
-    padding: 0;
-    color: #000000;
-    grid-column: 1 / -1;
+  margin: 0;
+  margin-bottom: 48px;
+  padding: 0;
+  color: #000000;
+  grid-column: 1 / -1;
 }   
+
+.results__cards_button {
+  width: 288px;
+  height: 64px;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ffffff;
+  border-radius: 80px;
+  box-shadow: 0px 0px 25px 0px #00000026;
+  cursor: pointer;
+
+
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #1A1B22;
+}
+
+.results__cards_button:hover {
+  background-color: #E8E8E8;
+  border-color: #E8E8E8;
+}
+
 
 .results__preloader {
     display: flex;

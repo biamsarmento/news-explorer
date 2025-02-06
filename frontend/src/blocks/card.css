@@ -31,6 +31,46 @@
   z-index: 2;
 }
 
+.card__save-button {
+  display: block;
+  box-sizing: border-box;
+  /* background-color: transparent;
+  background-image: url(../images/Trash.svg);
+  background-size: cover;
+  background-repeat: no-repeat; */
+  position: absolute;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 24px;
+  border: 0;
+  margin-right: 24px;
+  align-self: flex-end;
+  z-index: 2;
+
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.card__save-message {
+  position: absolute;
+  z-index: 2;
+  align-self: flex-end;
+  margin-top: 24px;
+  right: 66px;
+
+  width: 182px;
+  height: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 22px 0px #3B4A741A;
+  background-color: white;
+  color: black;
+  margin-right: 5px;
+  border: 0;
+}
+
+
 .card__delete-button_hidden {
   display: none;
 }
