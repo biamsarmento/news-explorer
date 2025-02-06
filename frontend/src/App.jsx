@@ -51,7 +51,6 @@ function App() {
 
     api.getUserCards()
       .then((cards) => {
-        console.log("Cards do user: ", cards);
         setUserCards(cards.data);
       })
       .catch((err) => {
@@ -177,7 +176,6 @@ function App() {
   const getUserArticles = () => {
     api.getUserCards()
       .then((cards) => {
-        console.log("Cards do user: ", cards);
         setUserCards(cards.data);
       })
       .catch((err) => {

@@ -12,7 +12,6 @@ module.exports.getUserCards = (req, res, next) => {
   Card.find({ owner: req.user._id })
     .populate('owner') // Popula a referência do owner (usuário)
     .then((cards) => {
-      console.log("UserCards: ", cards);
       if (!cards || cards.length === 0) {
         return res.status(404).send({ message: 'Nenhum cartão encontrado para este usuário.' });
       }
@@ -23,31 +22,43 @@ module.exports.getUserCards = (req, res, next) => {
 
 
 module.exports.createCard = (req, res, next) => {
-  console.log("User: ", req.user); // Verifique se o usuário está definido
 
   const { publishedAt, urlToImage, title, description, source } = req.body;
   const owner = req.user._id; // Garante que não vai quebrar
 
-  // if (!owner) {
-  //   return res.status(401).send({ message: 'Usuário não autenticado.' });
-  // }
+  Card.findOne({ description, owner })
+    .then((existingCard) => {
+      if (existingCard) {
+        return res.status(400).send({ message: 'Você já salvou um artigo com esta descrição.' });
+      }
 
-  console.log("Owner:", owner);
-
-  Card.create({ publishedAt, urlToImage, title, description, source, owner })
-    .then((card) => {
-      console.log("After: ", card);
-      Card.findById(card._id).populate('owner')
+      // Se não existir, cria o novo artigo
+      return Card.create({ publishedAt, urlToImage, title, description, source, owner })
+        .then((card) => {
+          res.status(201).send({ data: card });
+        });
     })
-    .then((card) => res.send({ data: card }))
     .catch((err) => {
-      console.log("Está dando erro aqui!");
       if (err.name === 'ValidationError') {
         return res.status(400).send({ message: `Dados inválidos fornecidos. ${err.message}` });
       }
       return next(err);
     });
 };
+
+  // Card.create({ publishedAt, urlToImage, title, description, source, owner })
+  //   .then((card) => {
+  //     console.log("After: ", card);
+  //     Card.findById(card._id).populate('owner')
+  //   })
+  //   .then((card) => res.send({ data: card }))
+  //   .catch((err) => {
+  //     console.log("Está dando erro aqui!");
+  //     if (err.name === 'ValidationError') {
+  //       return res.status(400).send({ message: `Dados inválidos fornecidos. ${err.message}` });
+  //     }
+  //     return next(err);
+  //   });
 
 
 module.exports.deleteCard = (req, res, next) => {

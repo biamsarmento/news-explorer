@@ -14,7 +14,6 @@ import not_found from '../images/not-found_v1.png';
 function Main(props) {
 
     const {currentUser} = React.useContext(CurrentUserContext);
-    console.log("Results: ", props.results.articles);
     const isLoading = true;
 
     const preLoader = () => {
