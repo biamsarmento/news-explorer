@@ -142,7 +142,7 @@ function Card(props) {
         if (isLoggedIn) {
             return (
                 <button className="card__save-button" onClick={handleSaveButton}>
-                    <img className="card__save-button_image" src={bookmark} alt="marcador de página" />
+                    {/* <img className="card__save-button_image" src={bookmark} alt="marcador de página" /> */}
                 </button>
             );
         } else {
@@ -157,7 +157,7 @@ function Card(props) {
                         className="card__save-button"
                         onClick={() => handleSaveButton(index)}
                     >
-                        <img className="card__save-button_image" src={bookmark} alt="marcador de página" />
+                        {/* <img className="card__save-button_image" src={bookmark} alt="marcador de página" /> */}
                     </button>
                 </>
             );
