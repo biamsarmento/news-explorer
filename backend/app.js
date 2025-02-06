@@ -27,7 +27,7 @@ app.post('/signup', createUser);
 app.use(auth);
 
 app.use('/users', usersRouter);
-app.use('/cards', cardsRouter);
+app.use('/articles', cardsRouter);
 
 app.use(errorLogger);
 

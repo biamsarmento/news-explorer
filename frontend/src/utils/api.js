@@ -45,26 +45,26 @@ class Api {
       return this._makeRequest('/users/me/avatar', 'PATCH', { avatar });
   }
 
-  addCard({name, link}) {
-      return this._makeRequest('/cards', 'POST', { name, link });
+  addCard({publishedAt, urlToImage, title, description, source}) {
+      return this._makeRequest('/articles', 'POST', { publishedAt, urlToImage, title, description, source });
   }
 
   deleteCard(cardId) {
-      return this._makeRequest(`/cards/${cardId}`, 'DELETE');
+      return this._makeRequest(`/articles/${cardId}`, 'DELETE');
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
-    // isLiked ? this.addLike(cardId) : this.removeLike(cardId);
-    return isLiked ? this._makeRequest(`/cards/likes/${cardId}`, 'PUT') : this._makeRequest(`/cards/likes/${cardId}`, 'DELETE');;
-  }
+//   changeLikeCardStatus(cardId, isLiked) {
+//     // isLiked ? this.addLike(cardId) : this.removeLike(cardId);
+//     return isLiked ? this._makeRequest(`/cards/likes/${cardId}`, 'PUT') : this._makeRequest(`/cards/likes/${cardId}`, 'DELETE');;
+//   }
 
-  addLike(cardId) {
-      return this._makeRequest(`/cards/likes/${cardId}`, 'PUT');
-  }
+//   addLike(cardId) {
+//       return this._makeRequest(`/cards/likes/${cardId}`, 'PUT');
+//   }
 
-  removeLike(cardId) {
-      return this._makeRequest(`/cards/likes/${cardId}`, 'DELETE');
-  }
+//   removeLike(cardId) {
+//       return this._makeRequest(`/cards/likes/${cardId}`, 'DELETE');
+//   }
 }
 
 const api = new Api({

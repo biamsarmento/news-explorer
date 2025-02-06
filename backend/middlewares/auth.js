@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
   try {
     const payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     req.user = payload;
+    console.log('User authenticated:', req.user._id);
     return next();
   } catch (err) {
     return res.status(401).send({ message: 'Token inválido ou expirado.' });

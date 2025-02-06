@@ -80,6 +80,16 @@ function App() {
     }).catch((error) => console.error(error));
   }
 
+
+  const handleSaveCard = (card) => {
+    console.log("Card em App.jsx: ", card);
+    api.addCard(card)
+      .then((newCard) => {
+        console.log("NewCard: ", newCard);
+      })
+      .catch((err) => console.error(err));
+  };
+
   async function handleCardDelete(card) {
       await api.deleteCard(card._id)
           .then(() => {
@@ -265,6 +275,7 @@ function App() {
                 setResults={setResults}
                 isPreLoader={isPreLoader}
                 setIsPreLoader={setIsPreLoader}
+                handleSaveCard={handleSaveCard}
                 ></Main>
               // </ProtectedRoute>
             }

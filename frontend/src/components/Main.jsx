@@ -48,13 +48,15 @@ function Main(props) {
                                 {props.results.articles.map((card, index) => {
                                     return (
                                         <Card
+                                            card={card}
+                                            handleSaveCard={props.handleSaveCard}
                                             index={index}
-                                            key={card.title} 
                                             image={card.urlToImage}
                                             date={card.publishedAt}
                                             title={card.title}
                                             description={card.description}
                                             source={card.source.name}
+                                            handleCardDelete={props.handleCardDelete}
                                             onDeleteCardClick={props.onDeleteCardClick}
                                             onCardDelete={props.onCardDelete}
                                             onCardLike={props.onCardLike}
