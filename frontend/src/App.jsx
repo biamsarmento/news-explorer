@@ -32,6 +32,7 @@ function App() {
   const [isResult, setIsResult] = React.useState(null);
   const [isPreLoader, setIsPreLoader] = React.useState(false);
   const [results, setResults] = React.useState([]);
+  const [userCards, setUserCards] = React.useState([]);
   const [userData, setUserData] = React.useState({ email: "", username: "" });
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,6 +48,15 @@ function App() {
           console.error("Erro ao obter User Info:", err);
         });
     })();
+
+    api.getUserCards()
+      .then((cards) => {
+        console.log("Cards do user: ", cards);
+        setUserCards(cards.data);
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar os cartões:', err);
+      });
       // api.getInitialCards()
       //   .then((result) => {
       //     setCards(result.data); 
@@ -164,6 +174,17 @@ function App() {
     setIsRegistrationSuccessfulPopupOpen(false);
   }
 
+  const getUserArticles = () => {
+    api.getUserCards()
+      .then((cards) => {
+        console.log("Cards do user: ", cards);
+        setUserCards(cards.data);
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar os cartões:', err);
+      });
+  };
+
   const handleSearch = (query) => {
     api_news.newsSearch(query)
       .then((data) => {
@@ -237,7 +258,7 @@ function App() {
 
   return (
     <div className="page"> 
-      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData}}>
+      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData, userCards}}>
         <Routes>
           <Route
             path="/"
@@ -296,7 +317,7 @@ function App() {
             path="/my-articles"
             element={
               <>
-              <MyArticles handleRegistration={handleRegistration} onClose={closeAllPopups} errorRegistration={errorRegistration}></MyArticles>
+              <MyArticles getUserArticles={getUserArticles} ></MyArticles>
               <Footer></Footer>
               </>
             }

@@ -68,14 +68,14 @@
 
 /* CARDS */
 .results__cards {
-    box-sizing: border-box;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, 400px);
-    grid-template-rows: repeat(3, auto);
-    gap: 16px;
-    padding: 80px 104px 64px 104px;
-    justify-content: center;
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 400px);
+  grid-template-rows: repeat(3, auto);
+  gap: 16px;
+  padding: 80px 104px 0 104px;
+  justify-content: center;
 }
 
 .results__cards_title {
@@ -104,6 +104,7 @@
   border-radius: 80px;
   box-shadow: 0px 0px 25px 0px #00000026;
   cursor: pointer;
+  margin-top: 64px;
 
 
   font-family: Roboto;

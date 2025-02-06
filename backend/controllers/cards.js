@@ -7,6 +7,21 @@ module.exports.getCards = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.getUserCards = (req, res, next) => {
+  // Procura todos os cards que possuem o owner igual ao usuário autenticado
+  Card.find({ owner: req.user._id })
+    .populate('owner') // Popula a referência do owner (usuário)
+    .then((cards) => {
+      console.log("UserCards: ", cards);
+      if (!cards || cards.length === 0) {
+        return res.status(404).send({ message: 'Nenhum cartão encontrado para este usuário.' });
+      }
+      return res.send({ data: cards });
+    })
+    .catch(next); // Passa o erro para o próximo middleware
+};
+
+
 module.exports.createCard = (req, res, next) => {
   console.log("User: ", req.user); // Verifique se o usuário está definido
 
@@ -58,6 +73,7 @@ module.exports.deleteCard = (req, res, next) => {
       return next(err);
     });
 };
+
 
 module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(

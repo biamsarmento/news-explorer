@@ -38,6 +38,8 @@ const cardSchema = new mongoose.Schema({
 
 });
 
+cardSchema.index({ description: 1, owner: 1 }, { unique: true })
+
 module.exports = mongoose.model('card', cardSchema);
 
 

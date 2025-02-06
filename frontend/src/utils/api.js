@@ -30,23 +30,27 @@ class Api {
   }
 
   getInitialCards() {
-      return this._makeRequest('/cards');
+    return this._makeRequest('/cards');
   }
 
   getUserInfo() {
-      return this._makeRequest('/users/me');
+    return this._makeRequest('/users/me');
   }
 
   editProfile({name, about}) {
-      return this._makeRequest('/users/me', 'PATCH', { name, about });
+    return this._makeRequest('/users/me', 'PATCH', { name, about });
   }
 
   editProfilePicture({avatar}) {
-      return this._makeRequest('/users/me/avatar', 'PATCH', { avatar });
+    return this._makeRequest('/users/me/avatar', 'PATCH', { avatar });
   }
 
   addCard({publishedAt, urlToImage, title, description, source}) {
-      return this._makeRequest('/articles', 'POST', { publishedAt, urlToImage, title, description, source });
+    return this._makeRequest('/articles', 'POST', { publishedAt, urlToImage, title, description, source });
+  }
+
+  getUserCards() {
+    return this._makeRequest('/articles/me');
   }
 
   deleteCard(cardId) {
