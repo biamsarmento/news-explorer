@@ -14,3 +14,20 @@
   /* src: url("InterVariable-Italic.woff2") format("woff2"); */
   src: url("./fonts/InterVariable-Italic.woff2") format("woff2");
 }
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  /* font-weight: 100 900; */
+  font-display: swap;
+  /* src: url("InterVariable-Italic.woff2") format("woff2"); */
+  src: url("./fonts/Roboto-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  /* font-weight: 100 900; */
+  font-display: swap;
+  /* src: url("InterVariable-Italic.woff2") format("woff2"); */
+  src: url("./fonts/RobotoSlab-VariableFont_wght.ttf") format("truetype");
+}

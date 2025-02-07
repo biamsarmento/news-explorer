@@ -17,10 +17,12 @@
 @import url("./blocks/nav.css");
 @import url("./blocks/new-card-popup.css");
 @import url("./blocks/page.css");
+@import url("./blocks/preloader.css");
 @import url("./blocks/profile-popup.css");
 @import url("./blocks/profile.css");
 @import url("./blocks/register-popup.css");
 @import url("./blocks/register.css");
+@import url("./blocks/results.css");
 @import url("./blocks/search-form.css");
 @import url("./blocks/search.css");
 @import url("./blocks/success-popup.css");

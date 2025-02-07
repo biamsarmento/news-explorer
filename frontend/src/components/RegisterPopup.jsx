@@ -21,19 +21,19 @@ export default function RegisterPopup(props) {
 
     if (name === "email") {
       if (!emailRegex.test(value)) {
-        errorMsg = "E-mail inválido";
+        errorMsg = "invalid e-mail";
       }
     } else if (name === "password") {
       if (!passwordRegex.test(value)) {
-        errorMsg = "A senha deve ter pelo menos 6 caracteres";
+        errorMsg = "Password must be at least 6 characters long";
       }
     } else if (name === "username") {
       if (value.length < 3) {
-        errorMsg = "O nome de usuário deve ter pelo menos 3 caracteres";
+        errorMsg = "Username must be at least 3 characters long";
       } else if (/\s/.test(value)) {  
-        errorMsg = "O nome de usuário não pode conter espaços";
+        errorMsg = "Username can't contains spaces";
       } else if (!usernameRegex.test(value)) {
-        errorMsg = "O nome de usuário pode conter apenas letras, números e underscores";
+        errorMsg = "Username must contain only letters, numbers and underscores";
       }
     }
 
@@ -91,7 +91,7 @@ export default function RegisterPopup(props) {
             <label className='form__input-label'>E-mail</label>
             <input 
             type="email" 
-            placeholder='Insira e-mail'
+            placeholder='Insert e-mail'
             className="form__input form__input_type_email" 
             id="email" 
             name="email"
@@ -103,10 +103,10 @@ export default function RegisterPopup(props) {
             <span className={`form__input-error ${errors.email ? "form__input-error_active" : ""}`}>
               {errors.email}
             </span>
-            <label className='form__input-label'>Senha</label>
+            <label className='form__input-label'>Password</label>
             <input 
             type="password" 
-            placeholder='Insira a senha'
+            placeholder='Insert password'
             className="form__input form__input_type_password" 
             id="password" 
             name="password" 
@@ -118,10 +118,10 @@ export default function RegisterPopup(props) {
             <span className={`form__input-error ${errors.password ? "form__input-error_active" : ""}`}>
               {errors.password}
             </span>
-            <label className='form__input-label'>Nome de usuário</label>
+            <label className='form__input-label'>Username</label>
             <input 
             type="text" 
-            placeholder='Insira seu nome de usuário'
+            placeholder='Insert username'
             className="form__input form__input_type_password" 
             id="username" 
             name="username" 
@@ -139,7 +139,7 @@ export default function RegisterPopup(props) {
               color: isValid ? 'white' : '#B6BCBF' 
             }}
             type="submit" disabled={!isValid} 
-            className="form__submit-button">Inscrever-se</button>
+            className="form__submit-button">Sign up</button>
         </fieldset>
     </form>
     </>

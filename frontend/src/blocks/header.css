@@ -2,6 +2,7 @@
   /* display: flex;
   justify-content: center;
   flex-direction: column; */
+  justify-content: start;
   position: relative;
   box-sizing: border-box;
   background-color: transparent;
@@ -19,8 +20,8 @@
   padding: 0;
   min-height: 80px;
   width: 100%;
-  padding-left: 104px;
-  padding-right: 104px;
+  /* padding-left: 104px;
+  padding-right: 104px; */
 }
 
 .header__logo {
@@ -28,7 +29,7 @@
   border: 0;
   margin: 0;
   color: white;
-  font-family: Roboto Slab;
+  /* font-family: Roboto Slab; */
   font-size: 20px;
   font-weight: 700;
   line-height: 24px;

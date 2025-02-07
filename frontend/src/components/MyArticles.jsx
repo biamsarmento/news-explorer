@@ -1,79 +1,56 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import InfoTooltip from "./InfoTooltip";
+import React from 'react';
+import Card from './Card';
 import Header from "./Header";
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import nlp from 'compromise';
 
+function MyArticles({getUserArticles, handleCardDelete}) {
 
-function MyArticles({handleLogin, isLoginPopupOpen, onClose, errorRegistration}) {
+    const {userCards, currentUser} = React.useContext(CurrentUserContext);
 
-    const [data, setData] = useState({
-        email: "",
-        password: "",
+    const keywordsArray = userCards.map(card => {
+        const doc = nlp(card.description);
+        const keywords = doc.terms().out('array').filter(word => word.length > 1); 
+        return keywords.length > 0 ? keywords[0] : ""; 
     });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
+    
+    const getArticles = () => {
+        getUserArticles();
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        handleLogin(data);
-    };
-
-    function renderLoginPopup() {
-        if (isLoginPopupOpen) {
-            return (
-                <InfoTooltip isLoginPopupOpen={isLoginPopupOpen} onClose={onClose} errorRegistration={errorRegistration}></InfoTooltip>
-            )
-        }
-    }
 
     return (
         <>
         <section className="my-articles" id="my-articles">
-        <Header></Header>
-            {/* <h1 className="login__title">Entrar</h1>
-            <div className="login__form">
-                <form className="login__form form" name="login__form" id="login__form" onSubmit={handleSubmit}>
-                <fieldset className="form__fieldset">
-                    <input 
-                    type="email" 
-                    className="form__input form__input_type_email" 
-                    id="email" 
-                    name="email"
-                    minLength="2" 
-                    maxLength="40" 
-                    placeholder="E-mail"
-                    value={data.email} 
-                    onChange={handleChange} 
-                    required />
-                    <span className="form__input-error nome-error"></span>
-                    <input 
-                    type="password" 
-                    className="form__input form__input_type_password" 
-                    id="password" 
-                    name="password" 
-                    minLength="2" 
-                    maxLength="200"
-                    placeholder="Senha"
-                    value={data.password} 
-                    onChange={handleChange} 
-                    required />
-                    <span className="form__input-error atividade-error"></span>
-                    <button type="submit" className="form__submit-button__login">Entrar</button>
-                </fieldset>
-                </form>
+            <Header></Header>
+            <div className="my-articles__info">
+                <p className="my-articles__info_page">Saved articles</p>
+                <h1 className="my-articles__info_title">{currentUser.username}, you have {userCards.length} saved {userCards.length === 1 ? "article" : "articles"}</h1>
+                <p className="my-articles__info_keywords">
+                {keywordsArray.length > 0 ? `By keywords: ${keywordsArray.slice(0, 3).join(", ")}` : ""}
+                {keywordsArray.length > 3 ? " and others" : ""}
+                </p>
             </div>
-            <div className="login__register-button">
-                <Link to="/signup" className="login__register-button_link">
-                    Ainda não é membro? Inscreva-se aqui!
-                </Link>
+            <div className="results_on">
+                <div className="results__container">
+                    <div className="results__cards">
+
+                        {userCards.map((card, index) => {
+                            return (
+                                <Card
+                                    card={card}
+                                    handleCardDelete={handleCardDelete}
+                                    index={index}
+                                    image={card.urlToImage}
+                                    date={card.publishedAt}
+                                    title={card.title}
+                                    description={card.description}
+                                    source={card.source.name}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
-            {isLoginPopupOpen && renderLoginPopup()} */}
         </section>
         </>
     )

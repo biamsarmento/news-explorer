@@ -1,13 +1,11 @@
 const mongoose = require('mongoose');
 
 const cardSchema = new mongoose.Schema({
-  name: {
-    type: String,
+  publishedAt: {
+    type: Date,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
-  link: {
+  urlToImage: {
     type: String,
     validate: {
       validator(v) {
@@ -17,40 +15,57 @@ const cardSchema = new mongoose.Schema({
     },
     required: [true, 'Link para a imagem exigido!'],
   },
+  title: {
+    type: String,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  source: {
+    name: {
+      type: String,
+      required: true,
+    },
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
-  likes: {
-    type: [mongoose.Schema.Types.ObjectId],
-    default: [],
-    ref: 'user',
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+
 });
+
+cardSchema.index({ description: 1, owner: 1 }, { unique: true })
 
 module.exports = mongoose.model('card', cardSchema);
 
-// Com Joi
 
 const Joi = require('joi');
 
 // Validação com Joi para os cards
 const cardValidationSchema = Joi.object({
-  name: Joi.string().min(2).max(30).required()
-    .messages({
-      'string.empty': 'O campo "name" é obrigatório.',
-      'string.min': 'O campo "name" deve ter no mínimo 2 caracteres.',
-      'string.max': 'O campo "name" deve ter no máximo 30 caracteres.',
-    }),
-  link: Joi.string().uri().required().messages({
-    'string.empty': 'O campo "link" é obrigatório.',
-    'string.uri': 'O campo "link" deve ser uma URL válida.',
+  publishedAt: Joi.date().required().messages({
+    'date.base': 'O campo "publishedAt" deve ser uma data válida.',
+    'any.required': 'O campo "publishedAt" é obrigatório.',
   }),
+  image: Joi.string().uri().required().messages({
+    'string.empty': 'O campo "image" é obrigatório.',
+    'string.uri': 'O campo "image" deve ser uma URL válida.',
+  }),
+  title: Joi.string().min(2).max(100).required().messages({
+    'string.empty': 'O campo "title" é obrigatório.',
+    'string.min': 'O campo "title" deve ter no mínimo 2 caracteres.',
+    'string.max': 'O campo "title" deve ter no máximo 100 caracteres.',
+  }),
+  description: Joi.string().required().messages({
+    'string.empty': 'O campo "description" é obrigatório.',
+  }),
+  source: Joi.object({
+    name: Joi.string().required().messages({
+      'string.empty': 'O campo "source.name" é obrigatório.',
+    }),
+  }).required(),
   owner: Joi.string().custom((value, helpers) => {
     if (!mongoose.Types.ObjectId.isValid(value)) {
       return helpers.error('any.invalid');
@@ -59,14 +74,6 @@ const cardValidationSchema = Joi.object({
   }).required().messages({
     'string.empty': 'O campo "owner" é obrigatório.',
     'any.invalid': 'O campo "owner" deve ser um ID válido.',
-  }),
-  likes: Joi.array().items(Joi.string().custom((value, helpers) => {
-    if (!mongoose.Types.ObjectId.isValid(value)) {
-      return helpers.error('any.invalid');
-    }
-    return value;
-  })).default([]).messages({
-    'any.invalid': 'Cada item em "likes" deve ser um ID válido.',
   }),
 });
 

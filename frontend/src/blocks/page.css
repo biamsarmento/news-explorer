@@ -5,6 +5,7 @@
   height: 100%;
   margin: 0 auto;
   padding: 0;
+  overflow: auto;
   background-color: transparent;
   /* background-image: url(../images/imagem_fundo.jpg);
   background-size: cover; */

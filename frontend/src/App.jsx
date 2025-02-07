@@ -1,14 +1,15 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Main from './components/Main';
-import Login from './components/Login';
-import Header from "./components/Header";
-import Register from './components/Register';
+// import Login from './components/Login';
+// import Header from "./components/Header";
+// import Register from './components/Register';
 import MyArticles from './components/MyArticles'
 import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
 import React from 'react';
 import './index.css';
 import api from './utils/api';
+import api_news from "./utils/api_news";
 import * as auth from './utils/auth';
 import { getToken, setToken } from "./utils/token";
 import CurrentUserContext from './contexts/CurrentUserContext';
@@ -28,6 +29,10 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState('');
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isResult, setIsResult] = React.useState(null);
+  const [isPreLoader, setIsPreLoader] = React.useState(false);
+  const [results, setResults] = React.useState([]);
+  const [userCards, setUserCards] = React.useState([]);
   const [userData, setUserData] = React.useState({ email: "", username: "" });
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,13 +48,16 @@ function App() {
           console.error("Erro ao obter User Info:", err);
         });
     })();
-      // api.getInitialCards()
-      //   .then((result) => {
-      //     setCards(result.data); 
-      //   })
-      //   .catch((err) => {
-      //     console.error("Erro ao obter cartões iniciais:", err);
-      //   });
+
+    (async () => {
+      await api.getUserCards()
+        .then((cards) => {
+          setUserCards(cards.data);
+        })
+        .catch((err) => {
+          console.error('Erro ao carregar os cartões:', err);
+        });
+    })();
 
     const token = getToken();
     if (!token) {
@@ -76,14 +84,49 @@ function App() {
     }).catch((error) => console.error(error));
   }
 
-  async function handleCardDelete(card) {
-      await api.deleteCard(card._id)
-          .then(() => {
-              setCards((state) => 
-                  state.filter((currentCard) => currentCard._id !== card._id)
-              );
-          })
-          .catch((error) => console.error(error));
+
+  const handleSaveCard = (card) => {
+    console.log("Card em App.jsx: ", card);
+    api.addCard(card)
+      .then((newCard) => {
+        api.getUserCards()
+        .then((cards) => {
+          setUserCards(cards.data);
+        })
+        .catch((err) => {
+          console.error('Erro ao carregar os cartões:', err);
+        });
+        // console.log("NewCard: ", newCard);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  // async function handleCardDelete(card) {
+  //     await api.deleteCard(card._id)
+  //         .then(() => {
+  //             setCards((state) => 
+  //                 state.filter((currentCard) => currentCard._id !== card._id)
+  //             );
+  //         })
+  //         .catch((error) => console.error(error));
+  // }
+
+  const handleCardDelete = (card) => {
+    api.deleteCard(card._id)
+      .then(() => {
+        getUserArticles();
+        // api.getUserCards()
+        //   .then((cards) => {
+        //     setUserCards(cards.data);
+        //   })
+        //   .catch((err) => {
+        //     console.error('Erro ao carregar os cartões:', err);
+        //   });
+          // setCards((state) => 
+          //     state.filter((currentCard) => currentCard._id !== card._id)
+          // );
+      })
+      .catch((error) => console.error(error));
   }
 
   const handleUpdateUser = (data) => {
@@ -150,6 +193,34 @@ function App() {
     setIsRegistrationSuccessfulPopupOpen(false);
   }
 
+  const getUserArticles = () => {
+    api.getUserCards()
+      .then((cards) => {
+        setUserCards(cards.data);
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar os cartões:', err);
+      });
+  };
+
+  const handleSearch = (query) => {
+    api_news.newsSearch(query)
+      .then((data) => {
+          console.log("Notícias encontradas:", data.articles);
+          if(data.articles.length > 0) {
+            setIsResult(true);
+            setIsPreLoader(false);
+            setResults(data);
+          } else if (data.articles.length === 0) {
+            setIsResult(false);
+            setIsPreLoader(false);
+          }
+      })
+      .catch((error) => {
+          console.error("Erro ao buscar notícias:", error);
+      });
+  }
+
   const handleRegistration = ({
     email,
     password,
@@ -184,6 +255,16 @@ function App() {
             .then(async (data) => {
               setUserData({email: data.data.email, username: data.data.username});
               setCurrentUser(data.data);
+              getUserArticles();
+              // api.getUserCards()
+              //   .then((cards) => {
+              //     if(cards) {
+              //       setUserCards(cards.data); 
+              //     }
+              //   })
+              //   .catch((err) => {
+              //     console.error('Erro ao carregar os cartões:', err);
+              //   });
               // api.getInitialCards()
               //   .then((result) => {
               //     setCards(result.data); 
@@ -205,7 +286,7 @@ function App() {
 
   return (
     <div className="page"> 
-      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData}}>
+      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData, userCards, setUserCards}}>
         <Routes>
           <Route
             path="/"
@@ -229,13 +310,21 @@ function App() {
                 onCardClick={handleCardClick}
                 cards={cards}
                 onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
+                handleCardDelete={handleCardDelete}
                 onAddPlaceSubmit={handleAddPlaceSubmit}
                 userData={userData}
                 handleLogin={handleLogin}
                 handleRegistration={handleRegistration}
                 isRegistrationSuccessful={isRegistrationSuccessful}
                 isRegistrationSuccessfulPopupOpen={isRegistrationSuccessfulPopupOpen}
+                handleSearch={handleSearch}
+                isResult={isResult}
+                setIsResult={setIsResult}
+                results={results}
+                setResults={setResults}
+                isPreLoader={isPreLoader}
+                setIsPreLoader={setIsPreLoader}
+                handleSaveCard={handleSaveCard}
                 ></Main>
               // </ProtectedRoute>
             }
@@ -256,8 +345,10 @@ function App() {
             path="/my-articles"
             element={
               <>
-              <MyArticles handleRegistration={handleRegistration} onClose={closeAllPopups} errorRegistration={errorRegistration}></MyArticles>
-              <Footer></Footer>
+                <ProtectedRoute>
+                  <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
+                </ProtectedRoute>
+                <Footer></Footer>
               </>
             }
           />
