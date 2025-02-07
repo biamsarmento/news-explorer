@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api_news from "../utils/api_news";
+import trash from '../images/trash.png';
 
 export default function SearchBar({ handleSearch, setIsPreLoader, setIsResult }) {
   const [query, setQuery] = useState("");

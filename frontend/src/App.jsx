@@ -49,20 +49,15 @@ function App() {
         });
     })();
 
-    api.getUserCards()
-      .then((cards) => {
-        setUserCards(cards.data);
-      })
-      .catch((err) => {
-        console.error('Erro ao carregar os cartões:', err);
-      });
-      // api.getInitialCards()
-      //   .then((result) => {
-      //     setCards(result.data); 
-      //   })
-      //   .catch((err) => {
-      //     console.error("Erro ao obter cartões iniciais:", err);
-      //   });
+    (async () => {
+      await api.getUserCards()
+        .then((cards) => {
+          setUserCards(cards.data);
+        })
+        .catch((err) => {
+          console.error('Erro ao carregar os cartões:', err);
+        });
+    })();
 
     const token = getToken();
     if (!token) {
@@ -94,19 +89,43 @@ function App() {
     console.log("Card em App.jsx: ", card);
     api.addCard(card)
       .then((newCard) => {
-        console.log("NewCard: ", newCard);
+        api.getUserCards()
+        .then((cards) => {
+          setUserCards(cards.data);
+        })
+        .catch((err) => {
+          console.error('Erro ao carregar os cartões:', err);
+        });
+        // console.log("NewCard: ", newCard);
       })
       .catch((err) => console.error(err));
   };
 
-  async function handleCardDelete(card) {
-      await api.deleteCard(card._id)
-          .then(() => {
-              setCards((state) => 
-                  state.filter((currentCard) => currentCard._id !== card._id)
-              );
+  // async function handleCardDelete(card) {
+  //     await api.deleteCard(card._id)
+  //         .then(() => {
+  //             setCards((state) => 
+  //                 state.filter((currentCard) => currentCard._id !== card._id)
+  //             );
+  //         })
+  //         .catch((error) => console.error(error));
+  // }
+
+  const handleCardDelete = (card) => {
+    api.deleteCard(card._id)
+      .then(() => {
+        api.getUserCards()
+          .then((cards) => {
+            setUserCards(cards.data);
           })
-          .catch((error) => console.error(error));
+          .catch((err) => {
+            console.error('Erro ao carregar os cartões:', err);
+          });
+          // setCards((state) => 
+          //     state.filter((currentCard) => currentCard._id !== card._id)
+          // );
+      })
+      .catch((error) => console.error(error));
   }
 
   const handleUpdateUser = (data) => {
@@ -235,6 +254,15 @@ function App() {
             .then(async (data) => {
               setUserData({email: data.data.email, username: data.data.username});
               setCurrentUser(data.data);
+              // api.getUserCards()
+              //   .then((cards) => {
+              //     if(cards) {
+              //       setUserCards(cards.data); 
+              //     }
+              //   })
+              //   .catch((err) => {
+              //     console.error('Erro ao carregar os cartões:', err);
+              //   });
               // api.getInitialCards()
               //   .then((result) => {
               //     setCards(result.data); 
@@ -280,7 +308,7 @@ function App() {
                 onCardClick={handleCardClick}
                 cards={cards}
                 onCardLike={handleCardLike}
-                onCardDelete={handleCardDelete}
+                handleCardDelete={handleCardDelete}
                 onAddPlaceSubmit={handleAddPlaceSubmit}
                 userData={userData}
                 handleLogin={handleLogin}
@@ -315,7 +343,7 @@ function App() {
             path="/my-articles"
             element={
               <>
-              <MyArticles getUserArticles={getUserArticles} ></MyArticles>
+              <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
               <Footer></Footer>
               </>
             }

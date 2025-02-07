@@ -1,28 +1,36 @@
-import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
 import Card from './Card';
-import InfoTooltip from "./InfoTooltip";
 import Header from "./Header";
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import nlp from 'compromise';
 
+function MyArticles({getUserArticles, handleCardDelete}) {
 
-function MyArticles({getUserArticles}) {
+    const {userCards, currentUser} = React.useContext(CurrentUserContext);
 
-    const {userCards} = React.useContext(CurrentUserContext);
-
-    // const [data, setData] = useState({
-    //     email: "",
-    //     password: "",
-    // });
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     handleLogin(data);
-    // };
-
+    const keywordsArray = userCards.map(card => {
+        return card.source.name;
+        // const doc = nlp(card.description);
+        // // Extrai termos individuais e filtra apenas as palavras (não frases compostas)
+        // const keywords = doc.terms().out('array').filter(word => word.length > 1); // Filtra palavras com mais de 1 caractere
+        // return keywords.length > 0 ? keywords[0] : ""; 
+    });
+    
     const getArticles = () => {
         getUserArticles();
     };
+
+    // React.useEffect(() => {
+    //     (async () => {
+    //         await api.getUserCards()
+    //           .then((cards) => {
+    //             setUserCards(cards.data);
+    //           })
+    //           .catch((err) => {
+    //             console.error('Erro ao carregar os cartões:', err);
+    //           });
+    //       })();
+    // });
 
     return (
         <>
@@ -30,19 +38,20 @@ function MyArticles({getUserArticles}) {
             <Header></Header>
             <div className="my-articles__info">
                 <p className="my-articles__info_page">Artigos salvos</p>
-                <h1 className="my-articles__info_title">Elise, você tem 5 artigos salvos</h1>
-                <p className="my-articles__info_keywords">Por palavras chaves:...</p>
+                <h1 className="my-articles__info_title">{currentUser.username}, você tem {userCards.length} artigos salvos</h1>
+                <p className="my-articles__info_keywords">Por palavras-chave: {keywordsArray.slice(0, 3).join(", ")} e outras </p>
             </div>
             <div className="results_on">
                 <div className="results__container">
                     <div className="results__cards">
-                        {getUserArticles()}
+                        {/* {getUserArticles()} */}
 
                         {userCards.map((card, index) => {
                             return (
                                 <Card
                                     card={card}
                                     // handleSaveCard={props.handleSaveCard}
+                                    handleCardDelete={handleCardDelete}
                                     index={index}
                                     image={card.urlToImage}
                                     date={card.publishedAt}

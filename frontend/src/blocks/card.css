@@ -59,7 +59,6 @@
 }
 
 .card__save-button:hover {
-  background-color: #E8E8E8;
   background-image: url('../images/bookmark_black.png');
 }
 
