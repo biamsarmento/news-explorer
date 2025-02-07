@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from './Card';
+import Article from './Article';
 import Header from "./Header";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import nlp from 'compromise';
@@ -36,7 +36,7 @@ function MyArticles({getUserArticles, handleCardDelete}) {
 
                         {userCards.map((card, index) => {
                             return (
-                                <Card
+                                <Article
                                     card={card}
                                     handleCardDelete={handleCardDelete}
                                     index={index}

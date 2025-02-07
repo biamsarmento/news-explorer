@@ -1,8 +1,5 @@
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import Main from './components/Main';
-// import Login from './components/Login';
-// import Header from "./components/Header";
-// import Register from './components/Register';
 import MyArticles from './components/MyArticles'
 import Footer from "./components/Footer";
 import ProtectedRoute from './components/ProtectedRoute';
@@ -76,17 +73,21 @@ function App() {
 
   // CARD
 
-  async function handleCardLike(card) {
-    const isLiked = card.likes.some(user => user === currentUser._id);
-    await api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard.data : currentCard));
-    }).catch((error) => console.error(error));
-  }
-
+  const getUserArticles = () => {
+    api.getUserCards()
+      .then((cards) => {
+        if(cards) {
+          setUserCards(cards.data);
+        } else {
+          setUserCards([]);
+        }
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar os cartões:', err);
+      });
+  };
 
   const handleSaveCard = (card) => {
-    console.log("Card em App.jsx: ", card);
     api.addCard(card)
       .then((newCard) => {
         api.getUserCards()
@@ -96,66 +97,31 @@ function App() {
         .catch((err) => {
           console.error('Erro ao carregar os cartões:', err);
         });
-        // console.log("NewCard: ", newCard);
       })
       .catch((err) => console.error(err));
   };
-
-  // async function handleCardDelete(card) {
-  //     await api.deleteCard(card._id)
-  //         .then(() => {
-  //             setCards((state) => 
-  //                 state.filter((currentCard) => currentCard._id !== card._id)
-  //             );
-  //         })
-  //         .catch((error) => console.error(error));
-  // }
 
   const handleCardDelete = (card) => {
     api.deleteCard(card._id)
       .then(() => {
+
         getUserArticles();
-        // api.getUserCards()
-        //   .then((cards) => {
-        //     setUserCards(cards.data);
-        //   })
-        //   .catch((err) => {
-        //     console.error('Erro ao carregar os cartões:', err);
-        //   });
-          // setCards((state) => 
-          //     state.filter((currentCard) => currentCard._id !== card._id)
-          // );
       })
       .catch((error) => console.error(error));
   }
 
-  const handleUpdateUser = (data) => {
-    (async () => {
-      await api.editProfile(data).then((newData) => {
-        setCurrentUser(newData.data);
-      });
-    })();
-  };
 
-  function handleUpdateAvatar(avatar) {
-    api.editProfilePicture(avatar)
-      .then((newUserData) => {
-        setCurrentUser(newUserData.data); 
-      })
-      .catch((err) => console.error(err));
-  }
+  // function handleAddPlaceSubmit(card) {
+  //   api.addCard(card)
+  //     .then((newCard) => {
+  //       setCards([newCard.data, ...cards]);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }
 
-  function handleAddPlaceSubmit(card) {
-    api.addCard(card)
-      .then((newCard) => {
-        setCards([newCard.data, ...cards]);
-      })
-      .catch((err) => console.error(err));
-  }
-
-  function handleLoginClick() {
-    setIsLoginPopupOpen(true);
-  }
+  // function handleLoginClick() {
+  //   setIsLoginPopupOpen(true);
+  // }
 
   function handleRegisterClick() {
     setIsRegisterPopupOpen(true);
@@ -165,48 +131,37 @@ function App() {
     setEditProfilePopupOpen(true);
   }
 
-  function handleAddPlaceClick() {
-    setAddPlacePopupOpen(true);
-  }
+  // function handleAddPlaceClick() {
+  //   setAddPlacePopupOpen(true);
+  // }
 
-  function handleEditAvatarClick() {
-    setEditAvatarPopupOpen(true);
-  }
+  // function handleEditAvatarClick() {
+  //   setEditAvatarPopupOpen(true);
+  // }
 
-  function handleDeleteCardClick() {
-    setDeleteCardPopupOpen(true);
-  }
+  // function handleDeleteCardClick() {
+  //   setDeleteCardPopupOpen(true);
+  // }
 
-  function handleCardClick(card) {
-    setSelectedCard(card);
-  }
+  // function handleCardClick(card) {
+  //   setSelectedCard(card);
+  // }
 
   function closeAllPopups() {
     setSelectedCard(null);
     setEditProfilePopupOpen(false);
-    setAddPlacePopupOpen(false);
-    setEditAvatarPopupOpen(false);
-    setDeleteCardPopupOpen(false);
+    // setAddPlacePopupOpen(false);
+    // setEditAvatarPopupOpen(false);
+    // setDeleteCardPopupOpen(false);
     setIsLoginPopupOpen(false);
     setErrorRegistration(false);
     setIsRegisterPopupOpen(false);
     setIsRegistrationSuccessfulPopupOpen(false);
   }
 
-  const getUserArticles = () => {
-    api.getUserCards()
-      .then((cards) => {
-        setUserCards(cards.data);
-      })
-      .catch((err) => {
-        console.error('Erro ao carregar os cartões:', err);
-      });
-  };
-
   const handleSearch = (query) => {
     api_news.newsSearch(query)
       .then((data) => {
-          console.log("Notícias encontradas:", data.articles);
           if(data.articles.length > 0) {
             setIsResult(true);
             setIsPreLoader(false);
@@ -256,27 +211,10 @@ function App() {
               setUserData({email: data.data.email, username: data.data.username});
               setCurrentUser(data.data);
               getUserArticles();
-              // api.getUserCards()
-              //   .then((cards) => {
-              //     if(cards) {
-              //       setUserCards(cards.data); 
-              //     }
-              //   })
-              //   .catch((err) => {
-              //     console.error('Erro ao carregar os cartões:', err);
-              //   });
-              // api.getInitialCards()
-              //   .then((result) => {
-              //     setCards(result.data); 
-              //   })
-              //   .catch((err) => {
-              //     console.error("Erro ao obter cartões iniciais:", err);
-              //   });
               const redirectPath = location.state?.from?.pathname || "/";
               navigate(redirectPath);
             })
             .catch(console.error);
-      
         }
       })
       .catch((error) => {
@@ -286,32 +224,30 @@ function App() {
 
   return (
     <div className="page"> 
-      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData, userCards, setUserCards}}>
+      <CurrentUserContext.Provider value={{currentUser, isLoggedIn, setIsLoggedIn, userData, userCards, setUserCards}}>
         <Routes>
           <Route
             path="/"
             element={
-              // <ProtectedRoute>
                 <Main 
-                onLoginClick={handleLoginClick}
+                // onLoginClick={handleLoginClick}
                 onEditProfileClick={handleEditProfileClick}
                 onRegisterClick={handleRegisterClick}
-                onAddPlaceClick={handleAddPlaceClick}
-                onEditAvatarClick={handleEditAvatarClick}
-                onDeleteCardClick={handleDeleteCardClick}
+                // onAddPlaceClick={handleAddPlaceClick}
+                // onEditAvatarClick={handleEditAvatarClick}
+                // onDeleteCardClick={handleDeleteCardClick}
                 isEditProfilePopupOpen={isEditProfilePopupOpen}
                 isRegisterPopupOpen={isRegisterPopupOpen}
                 isLoginPopupOpen={isLoginPopupOpen}
                 isAddPlacePopupOpen={isAddPlacePopupOpen}
-                isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-                isDeleteCardPopupOpen={isDeleteCardPopupOpen}
+                // isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+                // isDeleteCardPopupOpen={isDeleteCardPopupOpen}
                 selectedCard={selectedCard}
                 onClose={closeAllPopups}
-                onCardClick={handleCardClick}
+                // onCardClick={handleCardClick}
                 cards={cards}
-                onCardLike={handleCardLike}
                 handleCardDelete={handleCardDelete}
-                onAddPlaceSubmit={handleAddPlaceSubmit}
+                // onAddPlaceSubmit={handleAddPlaceSubmit}
                 userData={userData}
                 handleLogin={handleLogin}
                 handleRegistration={handleRegistration}
@@ -326,21 +262,8 @@ function App() {
                 setIsPreLoader={setIsPreLoader}
                 handleSaveCard={handleSaveCard}
                 ></Main>
-              // </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/signin"
-            // element={
-            //   <Login handleLogin={handleLogin} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration} ></Login>
-            // }
-          /> */}
-          {/* <Route
-            path="/signup"
-            element={
-              <Register handleRegistration={handleRegistration} isLoginPopupOpen={isLoginPopupOpen} onClose={closeAllPopups} errorRegistration={errorRegistration}></Register>
-            }
-          /> */}
           <Route
             path="/my-articles"
             element={

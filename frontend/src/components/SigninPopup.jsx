@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'; 
 
-export default function EditProfile(props) {
+export default function SigninPopup(props) {
   const [isValid, setIsValid] = useState(false);
   const [isButtonValid, setIsButtonValid] = useState(false);
   const [errors, setErrors] = useState({});
@@ -68,9 +68,9 @@ export default function EditProfile(props) {
 
   return (
     <form 
-    className="profile-popup__form form" 
+    className="signin-popup__form form" 
     name="formPopup"
-    id="profile-popup__form" 
+    id="signin-popup__form" 
     onSubmit={handleSubmit}
     >
         <fieldset

@@ -23,6 +23,7 @@
   line-height: 16.94px;
   text-align: start;
   color: black;
+  caret-color: black;
 }
 
 .form__input:first-of-type {
@@ -68,8 +69,13 @@
     color: black;
     background-color: transparent;
     border-bottom: 2px solid #CCCCCC;
-    caret-color: auto;
+    caret-color: black;
     overflow: hidden;
+}
+
+.form__input_type_password::placeholder,
+.form__input_type_email::placeholder {
+    color: #CCCCCC;
 }
 
 .form__input-label {

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const createCardSchema = Joi.object({
+const createArticleSchema = Joi.object({
   publishedAt: Joi.date().required().messages({
     'date.base': 'O campo "publishedAt" deve ser uma data válida.',
     'any.required': 'O campo "publishedAt" é obrigatório.',
@@ -42,7 +42,7 @@ const createCardSchema = Joi.object({
   }),
 });
 
-const cardIdSchema = Joi.object({
+const articleIdSchema = Joi.object({
   id: Joi.string().custom((value, helpers) => {
     if (!mongoose.Types.ObjectId.isValid(value)) {
       return helpers.error('any.invalid');
@@ -53,15 +53,4 @@ const cardIdSchema = Joi.object({
   }),
 });
 
-const cardLikeDislikeSchema = Joi.object({
-  cardId: Joi.string().custom((value, helpers) => {
-    if (!mongoose.Types.ObjectId.isValid(value)) {
-      return helpers.error('any.invalid');
-    }
-    return value;
-  }).required().messages({
-    'any.invalid': 'O parâmetro "cardId" deve ser um ID válido.',
-  }),
-});
-
-module.exports = { createCardSchema, cardIdSchema, cardLikeDislikeSchema };
+module.exports = { createArticleSchema, articleIdSchema };

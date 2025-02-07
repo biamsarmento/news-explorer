@@ -146,16 +146,16 @@
     opacity: 80%;
 }
 
-.form__input_type_password,
+/* .form__input_type_password,
 .form__input_type_email {
-    color: white;
+    color: black;
     background-color: transparent;
     border-bottom: 2px solid #CCCCCC;
     caret-color: auto;
     overflow: hidden;
-}
+} */
 
-.form__input_type_password::placeholder,
+/* .form__input_type_password::placeholder,
 .form__input_type_email::placeholder {
     color: #CCCCCC;
-}
+} */

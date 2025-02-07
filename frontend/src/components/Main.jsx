@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import PopupWithForm from './PopupWithForm';
-import RegisterPopup from './RegisterPopup';
+import SignupPopup from './SignupPopup';
 import SearchBar from './SearchBar';
-import Card from './Card';
-import EditProfile from './EditProfile';
+import Article from './Article';
+import SigninPopup from './SigninPopup';
 import InfoTooltip from './InfoTooltip';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
@@ -49,7 +49,7 @@ function Main(props) {
 
                             {/* Renderiza apenas os resultados visíveis */}
                             {props.results.articles.slice(0, visibleResults).map((card, index) => (
-                                <Card
+                                <Article
                                     key={index}
                                     card={card}
                                     handleSaveCard={props.handleSaveCard}
@@ -97,7 +97,6 @@ function Main(props) {
 
     const handleSuccessfulRegistration = () => {
         if (props.isRegistrationSuccessful) {
-            console.log("Registration Successful!");
             return (
                 <InfoTooltip 
                     isRegistrationSuccesssul={props.isRegistrationSuccessful} 
@@ -154,14 +153,14 @@ function Main(props) {
                     </div>
                 </section>
 
-                <PopupWithForm title="Sign in" name="profile-popup" navigate={props.onRegisterClick} link="Sign up" 
+                <PopupWithForm title="Sign in" name="signin-popup" navigate={props.onRegisterClick} link="Sign up" 
                     isOpen={props.isEditProfilePopupOpen} onClose={props.onClose}>
-                    <EditProfile handleLogin={props.handleLogin} isOpen={props.isEditProfilePopupOpen} onClose={props.onClose} />
+                    <SigninPopup handleLogin={props.handleLogin} isOpen={props.isEditProfilePopupOpen} onClose={props.onClose} />
                 </PopupWithForm>
 
-                <PopupWithForm title="Sign up" name="register-popup" navigate={props.onEditProfileClick} link="Sign in" 
+                <PopupWithForm title="Sign up" name="signup-popup" navigate={props.onEditProfileClick} link="Sign in" 
                     isOpen={props.isRegisterPopupOpen} onClose={props.onClose}>
-                    <RegisterPopup 
+                    <SignupPopup 
                         isRegistrationSuccessfulPopupOpen={props.isRegistrationSuccessfulPopupOpen} 
                         isRegistrationSuccessful={props.isRegistrationSuccessful} 
                         handleRegistration={props.handleRegistration} 

@@ -1,8 +1,7 @@
 import { useState, useContext, useEffect } from 'react'; 
 import CurrentUserContext from '../contexts/CurrentUserContext';
-import InfoTooltip from './InfoTooltip'; 
 
-export default function RegisterPopup(props) {
+export default function SignupPopup(props) {
   const [isValid, setIsValid] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -81,9 +80,9 @@ export default function RegisterPopup(props) {
   return (
     <>
     <form 
-    className="register-popup__form form" 
+    className="signup-popup__form form" 
     name="formPopup"
-    id="register-popup__form" 
+    id="signup-popup__form" 
     onSubmit={handleSubmit}
     >
         <fieldset

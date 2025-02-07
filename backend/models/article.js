@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const cardSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
   publishedAt: {
     type: Date,
     required: true,
@@ -36,9 +36,9 @@ const cardSchema = new mongoose.Schema({
 
 });
 
-cardSchema.index({ description: 1, owner: 1 }, { unique: true })
+articleSchema.index({ description: 1, owner: 1 }, { unique: true })
 
-module.exports = mongoose.model('card', cardSchema);
+module.exports = mongoose.model('article', articleSchema);
 
 
 const Joi = require('joi');

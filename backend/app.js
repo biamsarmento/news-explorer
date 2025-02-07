@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const usersRouter = require('./routes/users');
-const cardsRouter = require('./routes/cards');
+const articlesRouter = require('./routes/articles');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -27,7 +27,7 @@ app.post('/signup', createUser);
 app.use(auth);
 
 app.use('/users', usersRouter);
-app.use('/articles', cardsRouter);
+app.use('/articles', articlesRouter);
 
 app.use(errorLogger);
 
