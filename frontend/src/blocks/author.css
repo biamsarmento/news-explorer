@@ -16,6 +16,8 @@
     height: 464px;
     grid-row: 1 / 2; 
     grid-column: 1; 
+    border-radius: 100%;
+    object-fit: cover;
 }
 
 /* .author__info {
@@ -38,9 +40,23 @@
 .author__info_text1 {
     margin: 0;
     margin-top: 24px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
 }
 
 .author__info_text2 {
     margin: 0;
     margin-top: 24px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
 }

@@ -7,12 +7,13 @@ import signout_white from '../images/logout_white.png';
 
 function Header(props) {
 
-    const { isLoggedIn, setIsLoggedIn, currentUser } = useContext(CurrentUserContext);
+    const { isLoggedIn, setIsLoggedIn, currentUser, setUserCards } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     const location = useLocation();
 
     function signOut() {
         removeToken();
+        setUserCards([]);
         navigate("/");
         setIsLoggedIn(false);
     } 
@@ -37,8 +38,8 @@ function Header(props) {
         if (location.pathname === '/my-articles') {
             return (
                 <>
-                <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Início</button>
-                <button className='nav__my-articles nav__marcador_black nav__black'>Artigos Salvos</button>
+                <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Home</button>
+                <button className='nav__my-articles nav__marcador_black nav__black'>Saved Articles</button>
                 <button 
                 className="nav__signout_black"
                 onClick={signOut}
@@ -55,8 +56,8 @@ function Header(props) {
         } else if(isLoggedIn) {
             return (
                 <>
-                <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Início</button>
-                <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Artigos Salvos</button>
+                <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Home</button>
+                <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Saved Articles</button>
                 <button 
                 className="nav__signout"
                 onClick={signOut}
@@ -73,8 +74,8 @@ function Header(props) {
         } else {
             return (
                 <>
-                <button className='nav__inicio nav__marcador' >Início</button>
-                <button className="nav__signin" onClick={props.onEditProfileClick}>Entrar</button>
+                <button className='nav__inicio nav__marcador' >Home</button>
+                <button className="nav__signin" onClick={props.onEditProfileClick}>Sign in</button>
                 </>
             );
         }

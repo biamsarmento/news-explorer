@@ -133,7 +133,7 @@ function Card(props) {
                         {/* Exibe a mensagem "Remover dos salvos" ao passar o mouse no botão de remover */}
                         {hoveredTrashButton === index && (
                             <button className="card__save-message">
-                                Remover dos salvos
+                                Remove from saved
                             </button>
                         )}
                         <button
@@ -164,7 +164,7 @@ function Card(props) {
                 <>
                     {hoveredSaveButton === index && (
                         <button className="card__save-message">
-                            Faça login para salvar
+                            Sign in to save articles
                         </button>
                     )}
                     <button
@@ -196,12 +196,12 @@ function Card(props) {
     return (
         <div className="card">
             {renderSaveButton(props.index)}
-            <img className="card__image" src={props.image} alt="Imagem do cartão" />
+            <img className="card__image" src={props.image} alt="Article image" />
             <div className="card__tag">
                 <p className="card__tag-date">
-                    {new Date(props.date).toLocaleDateString('pt-BR', {
-                        day: '2-digit',
+                    {new Date(props.date).toLocaleDateString('en-US', {
                         month: 'long',
+                        day: '2-digit',
                         year: 'numeric'
                     })}
                 </p>

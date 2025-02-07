@@ -114,13 +114,14 @@ function App() {
   const handleCardDelete = (card) => {
     api.deleteCard(card._id)
       .then(() => {
-        api.getUserCards()
-          .then((cards) => {
-            setUserCards(cards.data);
-          })
-          .catch((err) => {
-            console.error('Erro ao carregar os cartões:', err);
-          });
+        getUserArticles();
+        // api.getUserCards()
+        //   .then((cards) => {
+        //     setUserCards(cards.data);
+        //   })
+        //   .catch((err) => {
+        //     console.error('Erro ao carregar os cartões:', err);
+        //   });
           // setCards((state) => 
           //     state.filter((currentCard) => currentCard._id !== card._id)
           // );
@@ -254,6 +255,7 @@ function App() {
             .then(async (data) => {
               setUserData({email: data.data.email, username: data.data.username});
               setCurrentUser(data.data);
+              getUserArticles();
               // api.getUserCards()
               //   .then((cards) => {
               //     if(cards) {
@@ -284,7 +286,7 @@ function App() {
 
   return (
     <div className="page"> 
-      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData, userCards}}>
+      <CurrentUserContext.Provider value={{currentUser, handleUpdateUser, handleUpdateAvatar, isLoggedIn, setIsLoggedIn, userData, userCards, setUserCards}}>
         <Routes>
           <Route
             path="/"
@@ -343,8 +345,10 @@ function App() {
             path="/my-articles"
             element={
               <>
-              <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
-              <Footer></Footer>
+                <ProtectedRoute>
+                  <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
+                </ProtectedRoute>
+                <Footer></Footer>
               </>
             }
           />

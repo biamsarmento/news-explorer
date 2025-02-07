@@ -17,14 +17,14 @@ export default function EditProfile(props) {
 
       if (name === "email") {
         if (!emailRegex.test(value)) {
-          errorMsg = "E-mail inválido";
+          errorMsg = "invalid e-mail";
           // setIsValid(false);
           // return
         }
       } else if (name === "password") {
         // if (!(value.length > 5 && value.length < 16)) {
         if (!passwordRegex.test(value)) {
-          errorMsg = "A senha deve ter pelo menos 6 caracteres";
+          errorMsg = "Password must be at least 6 characters long";
           // setIsValid(false);
           // return
         }
@@ -78,7 +78,7 @@ export default function EditProfile(props) {
             <label className='form__input-label'>E-mail</label>
             <input 
             type="email" 
-            placeholder='Insira e-mail'
+            placeholder='Insert e-mail'
             className="form__input form__input_type_email" 
             id="email" 
             name="email"
@@ -90,10 +90,10 @@ export default function EditProfile(props) {
             <span className={`form__input-error ${errors.email ? "form__input-error_active" : ""}`}>
               {errors.email}
             </span>
-            <label className='form__input-label'>Senha</label>
+            <label className='form__input-label'>Password</label>
             <input 
             type="password" 
-            placeholder='Insira a senha'
+            placeholder='Insert password'
             className="form__input form__input_type_password" 
             id="password" 
             name="password" 
@@ -111,7 +111,7 @@ export default function EditProfile(props) {
               color: isValid ? 'white' : '#B6BCBF'  // Cor do texto alterada com base na validade
             }}
             type="submit" disabled={!isValid} 
-            className="form__submit-button">Entrar</button>
+            className="form__submit-button">Sign in</button>
         </fieldset>
     </form>
   );
