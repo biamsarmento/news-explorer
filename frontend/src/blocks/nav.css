@@ -44,6 +44,7 @@
   width: 24px;
   height: 24px;
   background-image: url('../images/menu_mobile.png');
+  /* z-index: 5; */
 }
 
 
