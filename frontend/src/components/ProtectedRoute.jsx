@@ -9,10 +9,7 @@ export default function ProtectedRoute({
   const location = useLocation();
   const from = location.state?.from || "/";
 
-  // Desestruture isLoggedIn do valor fornecido por AppContext
   const { isLoggedIn } = useContext(CurrentUserContext);
-
-  console.log("isLoggedIn: ", isLoggedIn);
 
   if (anonymous && isLoggedIn) {
     return <Navigate to={from} />;
