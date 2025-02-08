@@ -1,14 +1,12 @@
-# Tripleten web_project_api_full
+# Tripleten news_explorer
 
-Nesse projeto combinamos o front da Sprint 17 e o back da Sprint 16 para fazer um site completamente funcional. 
+Nesse projeto, foi implementado um site que consome uma API que fornece notícias. 
+Nesse site o usuário pode pesquisar um tópico, e a API vai retornar notícias com esse tópico. 
+Se o usuário quiser salvar uma notícia, ele pode fazer login e clicar no botão para salvá-la. 
+Quando o usuário está logado, ele pode acessar a aba "My Articles" e conferir os artigos que ele salvou.
+Se ele quiser, ele pode deletar os artigos salvos também.
 
-O site que pode ser encontrado no link abaixo é uma rede social. 
-
-Os novos usuários podem realizar um cadastro e em seguida o login. Uma vez logados, podem recarregar a página tranquilamente e não vão precisar logar novamente, graças ao toke jsw utilizado nesse projeto. Os usuários podem trocar o nome e a descrição do perfil, assim como a foto do avatar, e também podem fazer posts, inseindo o título e uma imagem.
-
-Nessa rede social, só os usuários que postaram um determinado cartão podem excluí-lo. Mas qualquer usuário pode curtir qualquer post.  
-
-Espero que a sua experiência conhecendo o site seja a melhor possível :)
+Esper que você se divirta com esse site tanto quanto eu me diverti constyuindo ele :)
 
 Tecnologias usadas:
 JWT
