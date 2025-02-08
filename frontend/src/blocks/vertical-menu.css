@@ -14,7 +14,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     /* position: fixed; */
-    gap: 22px;
+    gap: 26px;
 
 
     width: 100%;
@@ -45,6 +45,11 @@
     background-color: transparent;
     color: white;
     border: 0;
+}
+
+.vertical-menu__items_signin {
+    align-self: center;
+    justify-self: center;
 }
 
 .vertical-menu__items_signout {

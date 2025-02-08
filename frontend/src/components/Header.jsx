@@ -171,7 +171,7 @@ function Header(props) {
     } 
 
     const handleVerticalMenu = () => {
-        setIsMenuOpen(!isMenuOpen); // Alterna entre abrir e fechar
+        setIsMenuOpen(!isMenuOpen); 
     }
 
     const renderLogo = () => {
@@ -275,6 +275,7 @@ function Header(props) {
                                 News Explorer
                             </button>
                         </div> 
+                        <div className="header__line"></div>
                     <button className='nav__inicio vertical-menu__items_home' onClick={() => navigate('/')}>Home</button>
                         {isLoggedIn && (
                             <>
@@ -286,7 +287,11 @@ function Header(props) {
                             </>
                         )}
                         {!isLoggedIn && (
-                            <button className="nav__signin vertocal-menu__items_signin" onClick={props.onEditProfileClick}>Sign in</button>
+                            <button className="nav__signin vertocal-menu__items_signin" 
+                            onClick={ () => {
+                                handleVerticalMenu();
+                                props.onEditProfileClick();
+                            }}>Sign in</button>
                         )}
                     </div>
                 </div>
