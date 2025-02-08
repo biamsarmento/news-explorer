@@ -2,7 +2,7 @@
   "name": "sprint19",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://biamsarmento.mooo.com",
+  "homepage": "https://github.com/biamsarmento/news-explorer",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",

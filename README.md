@@ -21,4 +21,4 @@ ufw
 React
 Node
 
-Pode ser acessado em: https://www.bmsproject.mooo.com
+Site: https://biamsarmento.github.io/news-explorer/
