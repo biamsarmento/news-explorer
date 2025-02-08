@@ -40,6 +40,13 @@
   cursor: pointer;
 }
 
+.nav__my-articles_mobile {
+  width: 24px;
+  height: 24px;
+  background-image: url('../images/menu_mobile.png');
+}
+
+
 .nav__marcador {
   padding: 25px 10px;
   border-bottom: 3px solid white;
@@ -196,8 +203,8 @@
   margin: 0;
   margin-bottom: 40px;
 }
-
-/* @media (min-width: 320px){
+/* 
+@media (min-width: 320px){
 
   .nav__logo-link {
     margin-bottom: 32px;
@@ -209,6 +216,18 @@
   }
 }
 
+@media (min-width: 680px){
+
+  .nav__logo-link {
+    margin: 0;
+    margin-bottom: 41px;
+  }
+
+  .nav__logo {
+    max-width: 173px;
+  }
+} 
+
 @media (min-width: 880px){
 
   .nav__logo-link {
@@ -219,5 +238,5 @@
   .nav__logo {
     max-width: 173px;
   }
-} */
-
+} 
+ */

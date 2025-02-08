@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import { removeToken } from '../utils/token';
 import signout_black from '../images/logout_black.png';
 import signout_white from '../images/logout_white.png';
+import menu_mobile from '../images/menu_mobile.png';
+import menu_mobile_black from '../images/menu_mobile_black.png';
 
 function Header(props) {
 
@@ -36,48 +38,91 @@ function Header(props) {
 
     const renderNav = () => {        
         if (location.pathname === '/my-articles') {
-            return (
-                <>
-                <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Home</button>
-                <button className='nav__my-articles nav__marcador_black nav__black'>Saved Articles</button>
-                <button 
-                className="nav__signout_black"
-                onClick={signOut}
-                >
-                    <p className='nav__user_black'>{currentUser.username}</p>
-                    <img
-                        src={signout_black}
-                        alt="signout sign"
-                        className="nav__signout-sign"
-                    /> 
-                </button>
-                </>
-            );
+            if (window.innerWidth < 680) {
+                return (
+                    <>
+                    <button className='nav__my-articles nav__my-articles_mobile'
+                    style={{
+                        backgroundImage:  `url(${menu_mobile_black})`
+                      }}
+                    >
+                        {/* <img src={menu_mobile_black} alt="menu simbolo" /> */}
+                    </button>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                    <button className='nav__inicio nav__black' onClick={() => navigate('/')}>Home</button>
+                    <button className='nav__my-articles nav__marcador_black nav__black'>Saved Articles</button>
+                    <button 
+                    className="nav__signout_black"
+                    onClick={signOut}
+                    >
+                        <p className='nav__user_black'>{currentUser.username}</p>
+                        <img
+                            src={signout_black}
+                            alt="signout sign"
+                            className="nav__signout-sign"
+                        /> 
+                    </button>
+                    </>
+                );
+            }
         } else if(isLoggedIn) {
-            return (
-                <>
-                <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Home</button>
-                <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Saved Articles</button>
-                <button 
-                className="nav__signout"
-                onClick={signOut}
-                >
-                    <p className='nav__user'>{currentUser.username}</p>
-                    <img
-                        src={signout_white}
-                        alt="signout sign"
-                        className="nav__signout-sign"
-                    /> 
-                </button>
-                </>
-            );
+            if (window.innerWidth < 680) {
+                return (
+                    <>
+                    <button 
+                    className='nav__my-articles nav__my-articles_mobile'
+                    style={{
+                      backgroundImage: `url(${menu_mobile})`
+                    }}
+                    >
+                    </button>
+                    </>
+                );
+            } else {
+
+                return (
+                    <>
+                    <button className='nav__inicio nav__marcador' onClick={() => navigate('/')} >Home</button>
+                    <button className='nav__my-articles' onClick={() => navigate('/my-articles')}>Saved Articles</button>
+                    <button 
+                    className="nav__signout"
+                    onClick={signOut}
+                    >
+                        <p className='nav__user'>{currentUser.username}</p>
+                        <img
+                            src={signout_white}
+                            alt="signout sign"
+                            className="nav__signout-sign"
+                        /> 
+                    </button>
+                    </>
+                );
+            }
         } else {
-            return (
-                <>
-                <button className='nav__inicio nav__marcador' >Home</button>
-                <button className="nav__signin" onClick={props.onEditProfileClick}>Sign in</button>
-                </>
-            );
+            if (window.innerWidth < 680) {
+                return (
+                    <>
+                    <button 
+                    className='nav__my-articles nav__my-articles_mobile'
+                    style={{
+                      backgroundImage: `url(${menu_mobile})`
+                    }}
+                    >
+                    </button>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                    <button className='nav__inicio nav__marcador' >Home</button>
+                    <button className="nav__signin" onClick={props.onEditProfileClick}>Sign in</button>
+                    </>
+                );
+            }    
         }
     };
 

@@ -8,17 +8,14 @@ import InfoTooltip from './InfoTooltip';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Footer from './Footer';
-// import avatar from '../images/author_avatar.png';
 import avatar from '../images/Me.jpeg';
 import not_found from '../images/not-found_v1.png';
 
 function Main(props) {
     const { currentUser } = useContext(CurrentUserContext);
     
-    // Estado para controlar quantos resultados estão sendo exibidos
     const [visibleResults, setVisibleResults] = useState(3);
 
-    // Função para carregar mais 3 resultados ao clicar no botão
     const handleShowMore = () => {
         setVisibleResults(prev => prev + 3);
     };

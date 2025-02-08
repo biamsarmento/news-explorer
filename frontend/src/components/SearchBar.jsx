@@ -1,6 +1,4 @@
 import { useState } from "react";
-import api_news from "../utils/api_news";
-import trash from '../images/trash.png';
 
 export default function SearchBar({ handleSearch, setIsPreLoader, setIsResult }) {
   const [query, setQuery] = useState("");
@@ -28,18 +26,3 @@ export default function SearchBar({ handleSearch, setIsPreLoader, setIsResult })
     </form>
   );
 }
-
-// import api_news from "./apiNews"; // Importa a instância da API
-
-// // Palavra-chave para a pesquisa
-// const keyword = "cake";
-
-// // Chamando a API para buscar notícias
-// api_news.newsSearch(keyword)
-//     .then((data) => {
-//         console.log("Notícias encontradas:", data.articles);
-//     })
-//     .catch((error) => {
-//         console.error("Erro ao buscar notícias:", error);
-//     });
-

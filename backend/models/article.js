@@ -44,7 +44,7 @@ module.exports = mongoose.model('article', articleSchema);
 const Joi = require('joi');
 
 // Validação com Joi para os cards
-const cardValidationSchema = Joi.object({
+const articleValidationSchema = Joi.object({
   publishedAt: Joi.date().required().messages({
     'date.base': 'O campo "publishedAt" deve ser uma data válida.',
     'any.required': 'O campo "publishedAt" é obrigatório.',
@@ -77,4 +77,4 @@ const cardValidationSchema = Joi.object({
   }),
 });
 
-module.exports.cardValidationSchema = cardValidationSchema;
+module.exports.articleValidationSchema = articleValidationSchema;

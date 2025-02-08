@@ -1,4 +1,4 @@
-.search-form {
+/* .search-form {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -30,7 +30,6 @@
 
 .search-form__button {
     position: absolute;
-    /* right: 185px; */
     left: 440px;
     width: 168px;
     height: 64px;
@@ -41,7 +40,7 @@
     cursor: pointer;
     padding: 0;
     box-shadow: 0px 5px 15px 0px #0E1A3933;
-}
+} */
 
 .search-form__button:hover {
     background-color: #347EFF;
@@ -59,3 +58,153 @@
     text-decoration-skip-ink: none;
     color: white;
 }
+
+
+
+
+
+@media (min-width: 320px){
+
+    .search-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        box-sizing: border-box;
+        /* max-width: 608px; */
+        gap: 16px;
+        /* height: 56px; */
+        background-color: transparent;
+    }
+
+    .search-form__input {
+        box-sizing: border-box;
+        border: 1px solid white;
+        border-radius: 100px;
+        width: 288px;
+        height: 56px;
+        background-color: white;
+        padding: 0px 24px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        outline: none;
+        backdrop-filter: blur(8px)
+    }
+
+    .search-form__button {
+        width: 288px;
+        height: 56px;
+        background-color: #2F71E5;
+        border: 1px solid #2F71E5;
+        border-radius: 100px;
+        columns: white;
+        cursor: pointer;
+        padding: 0;
+        align-self: flex-start;
+        box-shadow: 0px 5px 15px 0px #0E1A3933;
+    }
+  
+}
+
+@media (min-width: 680px){
+
+    /* .search-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        width: 452px;
+        height: 56px;
+        background-color: transparent;
+    } */
+
+    .search-form__input {
+        box-sizing: border-box;
+        border: 1px solid white;
+        border-radius: 100px;
+        width: 452px;
+        height: 56px;
+        background-color: white;
+        padding: 0px 24px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        outline: none;
+        backdrop-filter: blur(8px)
+    }
+
+    .search-form__button {
+        position: absolute;
+        /* right: 185px; */
+        left: 292px;
+        width: 160px;
+        height: 56px;
+        background-color: #2F71E5;
+        border: 1px solid #2F71E5;
+        border-radius: 100px;
+        columns: white;
+        cursor: pointer;
+        padding: 0;
+        box-shadow: 0px 5px 15px 0px #0E1A3933;
+    }
+} 
+
+@media (min-width: 1440px){
+
+    .search-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        max-width: 608px;
+        height: 64px;
+        background-color: transparent;
+    }
+
+    .search-form__input {
+        box-sizing: border-box;
+        border: 1px solid white;
+        border-radius: 100px;
+        width: 608px;
+        height: 64px;
+        background-color: white;
+        padding: 0px 24px;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        outline: none;
+        backdrop-filter: blur(8px)
+    }
+
+    .search-form__button {
+        position: absolute;
+        /* right: 185px; */
+        left: 440px;
+        width: 168px;
+        height: 64px;
+        background-color: #2F71E5;
+        border: 1px solid #2F71E5;
+        border-radius: 100px;
+        columns: white;
+        cursor: pointer;
+        padding: 0;
+        box-shadow: 0px 5px 15px 0px #0E1A3933;
+    }
+} 
+

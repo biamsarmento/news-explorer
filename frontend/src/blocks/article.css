@@ -34,10 +34,6 @@
   .article__save-button {
     display: block;
     box-sizing: border-box;
-    /* background-color: transparent;
-    background-image: url(../images/Trash.svg);
-    background-size: cover;
-    background-repeat: no-repeat; */
     position: absolute;
     cursor: pointer;
     padding: 0;
@@ -225,26 +221,181 @@
     margin: 0;
     padding: 0;
   }
-  
-  .song__like {
-    border: none;
-    background: url(https://practicum-content.s3.us-west-1.amazonaws.com/web-code/dom/moved_heart.svg) center no-repeat;
-    background-size: 100%;
-    cursor: pointer;
-    height: 15px;
-    width: 15px;
-    position: absolute;
-    right: 10px;
-    opacity: 0.5;
-    transition: 0.3s;
-  }
-  
-  .song__like:hover {
-    transform: scale(1.3);
-  }
-  
-  .song__like_active {
-    opacity: 1;
-    background: url(https://practicum-content.s3.us-west-1.amazonaws.com/web-code/dom/moved_heart-filled.svg) center no-repeat;
-  }
-  
+
+
+
+
+
+
+
+
+@media (min-width: 320px){
+    .article {
+        border-radius: 16px;
+        width: 288px;
+        height: 440px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 25px 0px #00000026;
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .article__image {
+        width: 288px;
+        height: 196px;
+        max-height: 272px;
+        object-fit: cover;
+        border-radius: 16px 16px 0 0; 
+        object-fit: cover;
+    }
+
+    .article__tag {
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 288px;
+        height: 228px;
+        margin: 0 auto;
+        padding: 0 16px 16px 16px;
+    }
+
+    .article__tag-title {
+        font-family: Roboto Slab;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      
+        max-height: 90px;
+      
+        margin: 0;
+        padding: 0;
+        color: #000000;
+        margin-bottom: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+}
+
+@media (min-width: 680px){
+    .article {
+        border-radius: 16px;
+        width: 224px;
+        height: 420px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 25px 0px #00000026;
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .article__image {
+        width: 224px;
+        height: 150px;
+        max-height: 272px;
+        object-fit: cover;
+        border-radius: 16px 16px 0 0; 
+        object-fit: cover;
+    }
+
+    .article__tag {
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 224px;
+        height: 256px;
+        margin: 0 auto;
+        padding: 0 16px 16px 16px;
+    }
+
+    .article__tag-title {
+        font-family: Roboto Slab;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        max-height: 90px;
+        margin: 0;
+        padding: 0;
+        color: #000000;
+        margin-bottom: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+} 
+
+@media (min-width: 1440px){
+    .article {
+        border-radius: 16px;
+        width: 400px;
+        height: 576px;
+        background-color: #FFFFFF;
+        box-shadow: 0px 0px 25px 0px #00000026;
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .article__image {
+        width: 400px;
+        height: 272px;
+        max-height: 272px;
+        object-fit: cover;
+        border-radius: 16px 16px 0 0; 
+        object-fit: cover;
+    }
+
+    .article__tag {
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        width: 400px;
+        height: 284px;
+        margin: 0 auto;
+        /* vertical-align: middle; */
+        padding: 0 24px 24px 24px;
+      }
+
+    .article__tag-title {
+        font-family: Roboto Slab;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 30px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+      
+        max-height: 90px;
+      
+        margin: 0;
+        padding: 0;
+        color: #000000;
+        margin-bottom: 8px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+} 

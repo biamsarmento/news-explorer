@@ -89,7 +89,7 @@ function App() {
 
   const handleSaveCard = (card) => {
     api.addCard(card)
-      .then((newCard) => {
+      .then(() => {
         api.getUserCards()
         .then((cards) => {
           setUserCards(cards.data);
@@ -110,19 +110,6 @@ function App() {
       .catch((error) => console.error(error));
   }
 
-
-  // function handleAddPlaceSubmit(card) {
-  //   api.addCard(card)
-  //     .then((newCard) => {
-  //       setCards([newCard.data, ...cards]);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }
-
-  // function handleLoginClick() {
-  //   setIsLoginPopupOpen(true);
-  // }
-
   function handleRegisterClick() {
     setIsRegisterPopupOpen(true);
   }
@@ -130,22 +117,6 @@ function App() {
   function handleEditProfileClick() {
     setEditProfilePopupOpen(true);
   }
-
-  // function handleAddPlaceClick() {
-  //   setAddPlacePopupOpen(true);
-  // }
-
-  // function handleEditAvatarClick() {
-  //   setEditAvatarPopupOpen(true);
-  // }
-
-  // function handleDeleteCardClick() {
-  //   setDeleteCardPopupOpen(true);
-  // }
-
-  // function handleCardClick(card) {
-  //   setSelectedCard(card);
-  // }
 
   function closeAllPopups() {
     setSelectedCard(null);
