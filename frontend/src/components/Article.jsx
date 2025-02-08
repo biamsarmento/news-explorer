@@ -15,14 +15,11 @@ function Article(props) {
 
     const location = useLocation();
 
-    // Função para renderizar o botão de salvar/remover
     const renderSaveButton = (index) => {
         if (isLoggedIn) {
-            // Se o usuário estiver logado, renderiza o botão com a imagem condicional
             if (location.pathname === '/my-articles') {
                 return (
                     <>
-                        {/* Exibe a mensagem "Remover dos salvos" ao passar o mouse no botão de remover */}
                         {hoveredTrashButton === index && (
                             <button className="article__save-message">
                                 Remove from saved
@@ -51,7 +48,6 @@ function Article(props) {
                 );
             }
         } else {
-            // Se não estiver logado, exibe a mensagem "Faça login para salvar" ao passar o mouse no botão de salvar
             return (
                 <>
                     {hoveredSaveButton === index && (
@@ -73,12 +69,10 @@ function Article(props) {
         }
     };
 
-    // Função para lidar com o clique no botão quando não está logado
     const handleSaveButton = (index) => {
         setClickedCardIndex(prevIndex => (prevIndex === index ? null : index));
     };
 
-    // Função para lidar com o clique no botão quando o usuário está logado
     const handleSaveCard = (index) => {
         setClickedCardIndex(prevIndex => (prevIndex === index ? null : index));
         props.handleSaveCard(props.card);
@@ -87,7 +81,7 @@ function Article(props) {
     return (
         <div className="article">
             {renderSaveButton(props.index)}
-            <img className="article__image" src={props.image} alt="Article image" />
+            <img className="article__image" src={props.image} alt="Article ilustration" />
             <div className="article__tag">
                 <p className="article__tag-date">
                     {new Date(props.date).toLocaleDateString('en-US', {

@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-// Remova isLoggedIn das props
 export default function ProtectedRoute({
   children,
   anonymous = false,
@@ -12,6 +11,8 @@ export default function ProtectedRoute({
 
   // Desestruture isLoggedIn do valor fornecido por AppContext
   const { isLoggedIn } = useContext(CurrentUserContext);
+
+  console.log("isLoggedIn: ", isLoggedIn);
 
   if (anonymous && isLoggedIn) {
     return <Navigate to={from} />;

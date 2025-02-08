@@ -10,11 +10,12 @@ const createArticleSchema = Joi.object({
     'string.empty': 'O campo "image" é obrigatório.',
     'string.uri': 'O campo "image" deve ser uma URL válida.',
   }),
-  title: Joi.string().min(2).max(100).required().messages({
-    'string.empty': 'O campo "title" é obrigatório.',
-    'string.min': 'O campo "title" deve ter no mínimo 2 caracteres.',
-    'string.max': 'O campo "title" deve ter no máximo 100 caracteres.',
-  }),
+  title: Joi.string().min(2).max(100).required()
+    .messages({
+      'string.empty': 'O campo "title" é obrigatório.',
+      'string.min': 'O campo "title" deve ter no mínimo 2 caracteres.',
+      'string.max': 'O campo "title" deve ter no máximo 100 caracteres.',
+    }),
   description: Joi.string().required().messages({
     'string.empty': 'O campo "description" é obrigatório.',
   }),

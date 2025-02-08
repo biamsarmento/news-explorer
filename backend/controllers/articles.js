@@ -20,10 +20,10 @@ module.exports.getUserArticles = (req, res, next) => {
     .catch(next); // Passa o erro para o próximo middleware
 };
 
-
 module.exports.createArticle = (req, res, next) => {
-
-  const { publishedAt, urlToImage, title, description, source } = req.body;
+  const {
+    publishedAt, urlToImage, title, description, source,
+  } = req.body;
   const owner = req.user._id; // Garante que não vai quebrar
 
   Article.findOne({ description, owner })
@@ -33,7 +33,9 @@ module.exports.createArticle = (req, res, next) => {
       }
 
       // Se não existir, cria o novo artigo
-      return Article.create({ publishedAt, urlToImage, title, description, source, owner })
+      return Article.create({
+        publishedAt, urlToImage, title, description, source, owner,
+      })
         .then((article) => {
           res.status(201).send({ data: article });
         });

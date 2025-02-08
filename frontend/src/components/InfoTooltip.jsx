@@ -1,11 +1,6 @@
-import React, { useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import xisVermelho from '../images/xis_vermelho.png';
-import checkPreto from '../images/check_preto.png';
-import CurrentUserContext from '../contexts/CurrentUserContext';
+import React from 'react';
 
-
-function InfoTooltip({isRegistrationSuccesssul, isRegistrationSuccessfulPopupOpen, onClose, navigate, errorRegistration}) {
+function InfoTooltip({isRegistrationSuccessfulPopupOpen, onClose, navigate}) {
 
     return (
         <section className={`success-popup ${isRegistrationSuccessfulPopupOpen ? 'success-popup_opened' : ''}`} id='success-popup'>

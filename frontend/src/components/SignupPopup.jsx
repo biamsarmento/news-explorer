@@ -1,5 +1,4 @@
-import { useState, useContext, useEffect } from 'react'; 
-import CurrentUserContext from '../contexts/CurrentUserContext';
+import { useState, useEffect } from 'react'; 
 
 export default function SignupPopup(props) {
   const [isValid, setIsValid] = useState(false);
@@ -41,7 +40,6 @@ export default function SignupPopup(props) {
       [name]: errorMsg,
     }));
 
-    // Atualiza a validade geral do formulário
     setIsValid(
       emailRegex.test(data.email) &&
       passwordRegex.test(data.password) &&

@@ -13,17 +13,11 @@ import CurrentUserContext from './contexts/CurrentUserContext';
 
 function App() {
 
-  const [cards, setCards] = React.useState([]);
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
-  const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = React.useState(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] = React.useState(false);
   const [isRegistrationSuccessfulPopupOpen, setIsRegistrationSuccessfulPopupOpen] = React.useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
-  const [errorRegistration, setErrorRegistration] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState('');
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isResult, setIsResult] = React.useState(null);
@@ -46,15 +40,13 @@ function App() {
         });
     })();
 
-    (async () => {
-      await api.getUserCards()
-        .then((cards) => {
-          setUserCards(cards.data);
-        })
-        .catch((err) => {
-          console.error('Erro ao carregar os cartões:', err);
-        });
-    })();
+    api.getUserCards()
+      .then((cards) => {
+        setUserCards(cards.data);
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar os cartões:', err);
+      });
 
     const token = getToken();
     if (!token) {
@@ -65,11 +57,49 @@ function App() {
         .then((data) => {
           setUserData({email: data.data.email, username: data.data.username});
           setIsLoggedIn(true);
-          const redirectPath = location.state?.from?.pathname || "/";
-          navigate(redirectPath);
+          // const redirectPath = location.state?.from?.pathname || "/";
+          // navigate(redirectPath);
         })
     }
   }, []);
+
+  // React.useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const userInfo = await api.getUserInfo();
+  //       setCurrentUser(userInfo.data);
+  //     } catch (err) {
+  //       console.error("Erro ao obter User Info:", err);
+  //     }
+  
+  //     try {
+  //       const userCards = await api.getUserCards();
+  //       setUserCards(userCards.data);
+  //     } catch (err) {
+  //       console.error("Erro ao carregar os cartões:", err);
+  //     }
+  
+  //     const token = getToken();
+  //     if(token) {
+  //       setIsLoggedIn(true);
+  //     } else if (!token) {
+  //       return;
+  //     }
+      
+  //     try {
+  //       const data = await auth.retrieveEmail(token);
+  //       setUserData({ email: data.data.email, username: data.data.username });
+  //       setIsLoggedIn(true);
+  //       // const redirectPath = location.state?.from?.pathname || "/";
+  //       // navigate(redirectPath);
+  //     } catch (err) {
+  //       console.error("Erro ao recuperar e-mail:", err);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, []);
+  
 
   // CARD
 
@@ -119,13 +149,8 @@ function App() {
   }
 
   function closeAllPopups() {
-    setSelectedCard(null);
     setEditProfilePopupOpen(false);
-    // setAddPlacePopupOpen(false);
-    // setEditAvatarPopupOpen(false);
-    // setDeleteCardPopupOpen(false);
     setIsLoginPopupOpen(false);
-    setErrorRegistration(false);
     setIsRegisterPopupOpen(false);
     setIsRegistrationSuccessfulPopupOpen(false);
   }
@@ -161,7 +186,7 @@ function App() {
       })
       .catch((error) => {
         setIsRegistrationSuccessful(false); 
-        setErrorRegistration(true);
+        // setErrorRegistration(true);
       });
   };
 
@@ -197,28 +222,28 @@ function App() {
     <div className="page"> 
       <CurrentUserContext.Provider value={{currentUser, isLoggedIn, setIsLoggedIn, userData, userCards, setUserCards}}>
         <Routes>
+        <Route
+            path="/my-articles"
+            element={
+              <>
+                <ProtectedRoute>
+                  <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
+                </ProtectedRoute>
+                <Footer></Footer>
+              </>
+            }
+          />
           <Route
             path="/"
             element={
                 <Main 
-                // onLoginClick={handleLoginClick}
                 onEditProfileClick={handleEditProfileClick}
                 onRegisterClick={handleRegisterClick}
-                // onAddPlaceClick={handleAddPlaceClick}
-                // onEditAvatarClick={handleEditAvatarClick}
-                // onDeleteCardClick={handleDeleteCardClick}
                 isEditProfilePopupOpen={isEditProfilePopupOpen}
                 isRegisterPopupOpen={isRegisterPopupOpen}
                 isLoginPopupOpen={isLoginPopupOpen}
-                isAddPlacePopupOpen={isAddPlacePopupOpen}
-                // isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-                // isDeleteCardPopupOpen={isDeleteCardPopupOpen}
-                selectedCard={selectedCard}
                 onClose={closeAllPopups}
-                // onCardClick={handleCardClick}
-                cards={cards}
                 handleCardDelete={handleCardDelete}
-                // onAddPlaceSubmit={handleAddPlaceSubmit}
                 userData={userData}
                 handleLogin={handleLogin}
                 handleRegistration={handleRegistration}
@@ -236,24 +261,9 @@ function App() {
             }
           />
           <Route
-            path="/my-articles"
-            element={
-              <>
-                <ProtectedRoute>
-                  <MyArticles handleCardDelete={handleCardDelete} getUserArticles={getUserArticles} ></MyArticles>
-                </ProtectedRoute>
-                <Footer></Footer>
-              </>
-            }
-          />
-          <Route
             path="*"
             element={
-              isLoggedIn ? (
-                <Navigate to="/" replace />
-              ) : (
-                <Navigate to="/" replace />
-              )
+              <Navigate to="/" replace />
             }
           />
         </Routes>

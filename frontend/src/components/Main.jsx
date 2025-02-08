@@ -1,18 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PopupWithForm from './PopupWithForm';
 import SignupPopup from './SignupPopup';
 import SearchBar from './SearchBar';
 import Article from './Article';
 import SigninPopup from './SigninPopup';
 import InfoTooltip from './InfoTooltip';
-import CurrentUserContext from '../contexts/CurrentUserContext';
 import Header from './Header';
 import Footer from './Footer';
 import avatar from '../images/Me.jpeg';
 import not_found from '../images/not-found_v1.png';
 
 function Main(props) {
-    const { currentUser } = useContext(CurrentUserContext);
     
     const [visibleResults, setVisibleResults] = useState(3);
 
@@ -133,7 +131,7 @@ function Main(props) {
                 
                 <section className="author">
                     <div className="author__content">
-                        <img src={avatar} alt="author's image" className="author__avatar" />
+                        <img src={avatar} alt="author's avatar" className="author__avatar" />
                         <div className="author__info">
                             <h2 className="author__info_title">About the author</h2>
                             <p className="author__info_text1">

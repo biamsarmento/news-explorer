@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 export default function SigninPopup(props) {
   const [isValid, setIsValid] = useState(false);
-  const [isButtonValid, setIsButtonValid] = useState(false);
   const [errors, setErrors] = useState({});
   const [data, setData] = useState({
     email: "",
@@ -18,15 +17,10 @@ export default function SigninPopup(props) {
       if (name === "email") {
         if (!emailRegex.test(value)) {
           errorMsg = "invalid e-mail";
-          // setIsValid(false);
-          // return
         }
       } else if (name === "password") {
-        // if (!(value.length > 5 && value.length < 16)) {
         if (!passwordRegex.test(value)) {
           errorMsg = "Password must be at least 6 characters long";
-          // setIsValid(false);
-          // return
         }
       }
 
@@ -35,10 +29,7 @@ export default function SigninPopup(props) {
           [name]: errorMsg,
       }));
 
-      // Atualizar a validade do formulário
-      // setIsValid(emailRegex.test(data.email) && (data.password.length > 5 && data.password.length < 16));
       setIsValid(emailRegex.test(data.email) && passwordRegex.test(data.password));
-      // setIsValid(true);
   };
 
   const handleChange = (e) => {
@@ -108,7 +99,7 @@ export default function SigninPopup(props) {
             <button 
             style={{
               backgroundColor: isValid ? '#2F71E5' : '#E6E8EB',
-              color: isValid ? 'white' : '#B6BCBF'  // Cor do texto alterada com base na validade
+              color: isValid ? 'white' : '#B6BCBF'  
             }}
             type="submit" disabled={!isValid} 
             className="form__submit-button">Sign in</button>

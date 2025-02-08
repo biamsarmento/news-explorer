@@ -4,7 +4,7 @@ import Header from "./Header";
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import nlp from 'compromise';
 
-function MyArticles({getUserArticles, handleCardDelete}) {
+function MyArticles({ handleCardDelete}) {
 
     const {userCards, currentUser} = React.useContext(CurrentUserContext);
 
@@ -14,9 +14,6 @@ function MyArticles({getUserArticles, handleCardDelete}) {
         return keywords.length > 0 ? keywords[0] : ""; 
     });
     
-    const getArticles = () => {
-        getUserArticles();
-    };
 
     return (
         <>
